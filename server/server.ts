@@ -8,8 +8,8 @@ server.on('connection', socket => {
   socket.on('join room', (roomId: string) => {
     let room = rooms.get(roomId);
     if (!room) {
-      room = [];
-      rooms.set(roomId, room);
+     socket.emit('error');
+     return;
     }
     if (room.length >= 4) {
       socket.emit('room full');
