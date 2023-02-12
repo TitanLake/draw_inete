@@ -1,37 +1,24 @@
-import socketIo from 'socket.io';
+const express = require('express')
+const http = require('http')
+const WebSocket = require('ws') 
 
-const rooms = new Map<string, string[]>();
 
-const server = socketIo();
+const port = 6969;
+const server = http.createServer(express)
+const wss = new WebSocket.Server({server})
 
-server.on('connection', socket => {
-  socket.on('join room', (roomId: string) => {
-    let room = rooms.get(roomId);
-    if (!room) {
-     socket.emit('error');
-     return;
-    }
-    if (room.length >= 4) {
-      socket.emit('room full');
-      return;
-    }
-    room.push(socket.id);
-    socket.join(roomId);
-    socket.emit('joined room', room.map(id => ({ id })));
-    server.to(roomId).emit('room update', room.map(id => ({ id })));
-  });
+wss.on('connection',function connection(ws){
+    wss.on('message',function incoming(data){
+        wss.clients.forEach(function each(client){
+            if(client != ws && client.readyState == WebSocket.OPEN)
+            {
+                client.send(data);
+            }
+        })
+    })
+})
 
-  socket.on('disconnect', () => {
-    for (const room of rooms.values()) {
-      const index = room.indexOf(socket.id);
-      if (index >= 0) {
-        room.splice(index, 1);
-        socket.leave(room.id);
-        server.to(room.id).emit('room update', room.map(id => ({ id })));
-        if (!room.length) {
-          rooms.delete(room.id);
-        }
-      }
-    }
-  });
-});
+server.listen(port,function(){
+    console.log('Server is listening on '+port)
+})
+
