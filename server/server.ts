@@ -1,24 +1,27 @@
-const express = require('express')
-const http = require('http')
-const WebSocket = require('ws') 
+import path from "path";
+
+const app = require('express')();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const port = process.env.PORT || 8080;
+import {Socket} from "socket.io"
+import {Request,Response} from "express";
 
 
-const port = 6969;
-const server = http.createServer(express)
-const wss = new WebSocket.Server({server})
+io.on("connection",(socket:Socket)=>{
 
-wss.on('connection',function connection(ws){
-    wss.on('message',function incoming(data){
-        wss.clients.forEach(function each(client){
-            if(client != ws && client.readyState == WebSocket.OPEN)
-            {
-                client.send(data);
-            }
-        })
-    })
+    console.log(Socket);
+    
+    
+
 })
 
-server.listen(port,function(){
-    console.log('Server is listening on '+port)
-})
+app.get('/', function(req:Request, res:Response) {
 
+  return res.sendfile(path.resolve("client","index.html"));
+  
+});
+
+server.listen(port, function() {
+  console.log(`Listening on port ${port}`);
+});
