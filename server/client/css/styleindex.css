@@ -138,6 +138,18 @@ section{
   margin: 2%;
   width: 50%;
 }
+.buttons .join{
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  margin: 2%;
+  width: 50%;
+}
+.buttons .create{
+  background: #1ab809;
+  border: 1px solid #1ab809;
+  margin: 2%;
+  width: 50%;
+}
 .drawing-board{
   flex: 1;
   overflow: hidden;
