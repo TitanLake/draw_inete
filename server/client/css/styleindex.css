@@ -137,19 +137,39 @@ section{
   border: 1px solid #ffffff;
   margin: 2%;
   width: 50%;
+  padding: 0.375rem 0.75rem;
 }
 .buttons .join{
   background: #ffffff;
   border: 1px solid #ffffff;
   margin: 2%;
   width: 50%;
+  padding: 0.375rem 0.75rem;
 }
 .buttons .create{
-  background: #1ab809;
-  border: 1px solid #1ab809;
+  background: #27fb10;
+  border: 1px solid #27fb10;
   margin: 2%;
   width: 50%;
+  padding: 0.375rem 0.75rem;
 }
+.buttons .info{
+  background: #00f2ff;
+  border: 1px solid #00f2ff;
+  margin: 2%;
+  width: 2.5%;
+  padding: 0.375rem 0.75rem;
+  position:absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.corner {
+  
+  position: relative;
+  /* set the height and width of the container */
+}
+
 .drawing-board{
   flex: 1;
   overflow: hidden;
