@@ -114,9 +114,39 @@
 <script>
 
 const socket = io.connect('http://localhost:8080/');
+const user_name = "jao"
+let socket_id = ""
+let room_id = ""
 
-socket.on('connect', () => {
-  console.log('Successfully connected!');
+socket.on('connect', (socketInfo) => {
+  
+  socket_id = "ola2"
+
+  socket.emit("create_room")
+
+  socket.on("room_joined",(id)=>{
+
+    room_id = id
+
+
+    socket.emit("message_sent",{
+      socket_id,
+      room_id,
+      user_name,
+      message:"hello"
+    })
+
+  })
+
+  socket.on("message_received",(socketInfo)=>{
+    socket.emit("load_messages")
+  })
+
+  socket.on("messages_load",(messages)=>{
+    console.log(messages);
+  })
+  
+
 });
 
 </script>

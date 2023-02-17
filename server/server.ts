@@ -1,6 +1,6 @@
 import path from "path";
 
-import uuid from "uuid"
+import { uuid } from 'uuidv4';
 const app = require('express')();
 import express from "express";
 const server = require('http').createServer(app);
@@ -63,13 +63,16 @@ io.on("connection",(socket:Socket)=>{
     socket.emit("room_joined",socketInfo.room_id)
 
     socket.to(socketInfo.room_id).emit("user_entered",socketInfo)
-    
-})
 
-  socket.on('create_room', async function(socketInfo: ISocketToUser) {  
+    
+  })
+
+  socket.on('create_room', async function() {  
    
+    let socketInfo = {} as ISocketToUser
+
     do{
-      socketInfo.room_id = uuid.v4(); // generate room id that is not yet created
+      socketInfo.room_id = uuid(); // generate room id that is not yet created
     }while(rooms.find(o =>(
       o !== socketInfo.room_id
     )));
@@ -86,7 +89,7 @@ io.on("connection",(socket:Socket)=>{
 
   socket.on("load_messages", async function(socketInfo: ISocketToUser){
 
-    socket.to(socketInfo.socket_id).emit("messages", messages[socketInfo.room_id]) // emit load messages to only user
+    socket.to(socketInfo.socket_id).emit("messages_load", messages[socketInfo.room_id]) // emit load messages to only user
 
   })
 
