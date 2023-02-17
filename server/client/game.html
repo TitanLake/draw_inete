@@ -4,10 +4,12 @@
   <head>
     <meta charset="utf-8">
     <title>Drawing App JavaScript | CodingNepal</title>
-    <link rel="stylesheet" href="client/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="client/js/script.js" defer></script>
+    <script src="./js/script.js" defer></script>
   </head>
+
+
   <body>
     <div style="display: block; margin: 0 auto;text-align: center;">
     <table class="table">
@@ -105,50 +107,16 @@
   </body>
 </html>
 
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.js" integrity="sha512-rwu37NnL8piEGiFhe2c5j4GahN+gFsIn9k/0hkRY44iz0pc81tBNaUN56qF8X4fy+5pgAAgYi2C9FXdetne5sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
-  (function(){
-    const sendBtn = document.querySelector('#send');
-    const messages = document.querySelector('#messages');
-    const messageBox = document.querySelector('#messageBox');
 
-    let ws;
+const socket = io.connect('http://localhost:8080/');
 
-    function showMessage(message){
-      message.textContent += '\n\n'+message;
-      messages.scrollTop = messages.scrollHeight;
-      messageBox.value= '';
-    }
-
-    function init(){
-      if(ws){
-        ws.onerror = ws.onopen = ws.onclose = null;
-        ws.close();
-      }
-
-      ws=new WebSocket('ws://localhost:6969');
-      ws.onopen = () =>{
-        console.log('Connection opened');
-      }
-
-      ws.onmessage = ({data}) => showMessage(data);
-      ws.onclose = function () {
-        ws=null;
-      }
-    }
-    
-  sendBtn.onClick=function(){
-    if(!ws)
-    {
-      showMesWsage("No WebSocket connection :(");
-    }
-
-    ws.send(messageBox.value);
-    showMessage(messageBox.value);
-  }
-
-  init();
-
-  })();
-
+socket.on('connect', () => {
+  console.log('Successfully connected!');
+});
 
 </script>
