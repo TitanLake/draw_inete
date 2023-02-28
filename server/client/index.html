@@ -13,10 +13,25 @@
   <body>
     <div style="display: block; margin: 0 auto;text-align: center;">
       <div class="form-label" style="font-size: 120%;">Enter your username 👨‍💼</div>
-      <input type="text" class="form-control" style="margin:2%">
+      <input type="text" class="form-control" style="margin:2%" id="SaveUserName">
       <div class="row buttons" style="align-items:center;justify-content: center;">
-        <button class="enter">Enter</button>  
-        <a href="./about.html">
+        <a href="./game.html">
+          <button class="enter">Enter</button>
+          <script>
+            (function()
+            {
+              var input = document.getElementById('SaveUserName');              
+              
+              document.getElementById("enter").onclick = function () {                
+                localStorage && (localStorage.setItem('userName', input.value));
+
+                console.log(localStorage.getItem('userName'));
+              };
+    
+            })();            
+          </script>
+        </a>          
+        <a href="./about.html">          
           <button class="info">i</button>  
         </a> 
       </div>
