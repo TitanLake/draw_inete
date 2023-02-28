@@ -8,6 +8,8 @@ clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
 ctx = canvas.getContext("2d");
 
+const socket = io.connect('http://localhost:8080/');
+
 // global variables with default value
 let prevMouseX, prevMouseY, snapshot,
 isDrawing = false,
@@ -63,6 +65,7 @@ const startDraw = (e) => {
     ctx.lineWidth = brushWidth; // passing brushSize as line width
     ctx.strokeStyle = selectedColor; // passing selectedColor as stroke style
     ctx.fillStyle = selectedColor; // passing selectedColor as fill style
+
     // copying canvas data & passing as snapshot value.. this avoids dragging the image
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
 }
@@ -76,6 +79,9 @@ const drawing = (e) => {
         // to paint white color on to the existing canvas content else set the stroke color to selected color
         ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
         ctx.lineTo(e.offsetX, e.offsetY); // creating line according to the mouse pointer
+
+        
+
         ctx.stroke(); // drawing/filling line with color
     } else if(selectedTool === "rectangle"){
         drawRect(e);
@@ -124,6 +130,7 @@ saveImg.addEventListener("click", () => {
     link.href = canvas.toDataURL(); // passing canvasData as link href value
     link.click(); // clicking link to download image
 });
+
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
