@@ -116,8 +116,10 @@
 <script>
 
 const socket = io.connect('http://localhost:8080/');
-const user_name = "jao"
-let socket_id = ""
+const user_name = localStorage.getItem('userName');
+let socket_id = "";
+
+
 
 const messageTextArea = document.getElementById("messages")
 const btnSend = document.getElementById("sendMessage")
