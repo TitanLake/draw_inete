@@ -77,9 +77,7 @@ socket.on("startDrawServer",(socketData)=>{
     ctx.beginPath(); // creating new path to draw
     ctx.lineWidth = socketData.brushWidth; // passing brushSize as line width
     ctx.strokeStyle = socketData.selectedColor; // passing selectedColor as stroke style
-    ctx.fillStyle = socketData.selectedColor; // passing selectedColor as fill style
-
-
+    ctx.fillStyle = socketData.selectedColor; // passing selectedColor as fill styles
 
     // copying canvas data & passing as snapshot value.. this avoids dragging the image
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
