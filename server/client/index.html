@@ -16,20 +16,7 @@
       <input type="text" class="form-control" style="margin:2%" id="SaveUserName">
       <div class="row buttons" style="align-items:center;justify-content: center;">
         <a href="./game.html">
-          <button class="enter">Enter</button>
-          <script>
-            (function()
-            {
-              var input = document.getElementById('SaveUserName');              
-              
-              document.getElementById("enter").onclick = function () {                
-                localStorage && (localStorage.setItem('userName', input.value));
-
-                console.log(localStorage.getItem('userName'));
-              };
-    
-            })();            
-          </script>
+          <button class="enter" id="enter">Enter</button>
         </a>          
         <a href="./about.html">          
           <button class="info">i</button>  
@@ -38,4 +25,17 @@
     </div>
   </body>
 </html>
+<script>
+  (function()
+  {
+    var input = document.getElementById('SaveUserName');              
+    
+    document.getElementById("enter").onclick = function () {                
+      localStorage && (localStorage.setItem('userName', input.value));
+
+      console.log(localStorage.getItem('userName')+' joined the game');
+    };
+
+  })();            
+</script>
 
