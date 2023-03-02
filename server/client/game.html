@@ -20,19 +20,7 @@
         </th>
       </tr>
     </thead>
-    <tbody>
-    <tr>
-      <td>JC</td>
-    </tr>
-    <tr>
-      <td>PJ</td>
-    </tr>
-    <tr>
-      <td>JRC</td>
-    </tr>
-    <tr>
-      <td>Rosarinho</td>
-    </tr>
+    <tbody  id="playersTable">
   </tbody>
     </table>
   </div>
@@ -124,6 +112,19 @@ let socket_id = "";
 const messageTextArea = document.getElementById("messages")
 const btnSend = document.getElementById("sendMessage")
 const messageText = document.getElementById("messageBox")
+const tableBody = document.getElementById('playersTable')
+
+
+
+socket.on('playerConnected', (player) => {
+  // code to add table row for new player
+
+  const newRow = document.createElement('tr');
+  newRow.innerHTML = `<td>${player}</td>`;
+  tableBody.appendChild(newRow);
+});
+
+
 
 btnSend.addEventListener("click",()=>{
 
