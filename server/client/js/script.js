@@ -8,7 +8,6 @@ clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
 ctx = canvas.getContext("2d");
 
-const socket = io.connect('http://localhost:8080/');
 
 // global variables with default value
 let prevMouseX, prevMouseY, snapshot,
