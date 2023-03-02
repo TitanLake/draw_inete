@@ -8,7 +8,6 @@ clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
 ctx = canvas.getContext("2d");
 
-const socket = io.connect('http://localhost:8080/');
 
 // global variables with default value
 let prevMouseX, prevMouseY, snapshot,
@@ -58,31 +57,61 @@ const drawTriangle = (e) => {
 }
 
 const startDraw = (e) => {
+    socket.emit("startDrawClient",{
+        posX:e.offsetX,
+        posY:e.offsetY,
+        brushWidth,
+        selectedColor,
+        selectedColor
+    })
+}
+
+socket.on("startDrawServer",(socketData)=>{
+
+    console.log(socketData);
+
     isDrawing = true;
-    prevMouseX = e.offsetX; // passing current mouseX position as prevMouseX value
-    prevMouseY = e.offsetY; // passing current mouseY position as prevMouseY value
+    prevMouseX = socketData.posX; // passing current mouseX position as prevMouseX value
+    prevMouseY = socketData.posY; // passing current mouseY position as prevMouseY value
+
     ctx.beginPath(); // creating new path to draw
-    ctx.lineWidth = brushWidth; // passing brushSize as line width
-    ctx.strokeStyle = selectedColor; // passing selectedColor as stroke style
-    ctx.fillStyle = selectedColor; // passing selectedColor as fill style
+    ctx.lineWidth = socketData.brushWidth; // passing brushSize as line width
+    ctx.strokeStyle = socketData.selectedColor; // passing selectedColor as stroke style
+    ctx.fillStyle = socketData.selectedColor; // passing selectedColor as fill style
+
+
 
     // copying canvas data & passing as snapshot value.. this avoids dragging the image
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
-}
+
+})
 
 const drawing = (e) => {
+    
+    socket.emit("drawingClient", {
+        posX:e.offsetX, posY:e.offsetY
+        
+    })
+    
+}
+
+socket.on("drawingServer",(drawData)=>{
+
+    console.log("drawing");
+
     if(!isDrawing) return; // if isDrawing is false return from here
     ctx.putImageData(snapshot, 0, 0); // adding copied canvas data on to this canvas
+
+    console.log("drawing 2");
 
     if(selectedTool === "brush" || selectedTool === "eraser") {
         // if selected tool is eraser then set strokeStyle to white 
         // to paint white color on to the existing canvas content else set the stroke color to selected color
         ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
-        ctx.lineTo(e.offsetX, e.offsetY); // creating line according to the mouse pointer
-
-        
+        ctx.lineTo(drawData.posX, drawData.posY); // creating line according to the mouse pointer
 
         ctx.stroke(); // drawing/filling line with color
+
     } else if(selectedTool === "rectangle"){
         drawRect(e);
     } else if(selectedTool === "circle"){
@@ -90,7 +119,7 @@ const drawing = (e) => {
     } else {
         drawTriangle(e);
     }
-}
+})
 
 toolBtns.forEach(btn => {
     btn.addEventListener("click", () => { // adding click event to all tool option
@@ -120,9 +149,16 @@ colorPicker.addEventListener("change", () => {
 });
 
 clearCanvas.addEventListener("click", () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing whole canvas
-    setCanvasBackground();
+    socket.emit("clearCanvaClient")
+
 });
+
+socket.on("clearCanvaServer",()=>{
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing whole canvas
+console.log("clear");
+
+    setCanvasBackground();
+})
 
 saveImg.addEventListener("click", () => {
     const link = document.createElement("a"); // creating <a> element
@@ -132,6 +168,11 @@ saveImg.addEventListener("click", () => {
 });
 
 
+socket.on("startDraw",()=>{
+
+})
+
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
+
 canvas.addEventListener("mouseup", () => isDrawing = false);

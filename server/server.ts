@@ -37,7 +37,7 @@ interface ISocketToUserWithMessage extends ISocketToUser
 }
 
 
-const user_names= []
+const user_names = []
 const messages: IMessage[] = [] 
 
 
@@ -47,7 +47,7 @@ io.on("connection",(socket:Socket)=>{
   socket.on("load_messages", async function(socketInfo: ISocketToUser){
     console.log("loadinmessages");
 
-    socket.emit("messages_load", messages) // emit load messages to only user
+    io.emit("messages_load", messages) // emit load messages to only user
 
   })
 
@@ -58,10 +58,21 @@ io.on("connection",(socket:Socket)=>{
       username:socketInfo.user_name
     })
    
-    socket.emit("message_received")
+    io.emit("message_received")
     
   })
 
+  socket.on("startDrawClient",(data)=>{
+    io.emit("startDrawServer",data)
+  })
+
+  socket.on("drawingClient",(data)=>{
+    io.emit("drawingServer",data)
+  })
+
+  socket.on("clearCanvaClient",()=>{
+    io.emit("clearCanvaServer");
+  })
 
 })
 
