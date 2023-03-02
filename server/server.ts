@@ -71,7 +71,17 @@ io.on("connection",(socket:Socket)=>{
   })
 
   socket.on("clearCanvaClient",()=>{
-    io.emit("clearCanvaServer");
+
+    socket.broadcast.emit("clearCanvaServer")
+    socket.emit("clearCanvaServer")
+  })
+
+  socket.on("changeToolClient",(btnId)=>{
+    
+    console.log(btnId);
+    
+    socket.broadcast.emit("changeToolServer", btnId)
+    socket.emit("changeToolServer", btnId)
   })
 
 })
