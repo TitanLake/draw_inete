@@ -96,7 +96,8 @@ const drawing = (e) => {
 
     socket.emit("drawingClient", {
         posX:e.offsetX, posY:e.offsetY
-        ,canva:e
+        ,
+        canva:e
     })
     
 }

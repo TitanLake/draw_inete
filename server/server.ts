@@ -36,8 +36,13 @@ interface ISocketToUserWithMessage extends ISocketToUser
     message:string
 }
 
+interface IUser{
+  sicketId:string,
+  userName :string
+}
 
-const user_names = []
+
+const users:IUser[] = []
 const messages: IMessage[] = [] 
 
 
@@ -78,8 +83,6 @@ io.on("connection",(socket:Socket)=>{
 
   socket.on("changeToolClient",(btnId)=>{
     
-    console.log(btnId);
-    
     socket.broadcast.emit("changeToolServer", btnId)
     socket.emit("changeToolServer", btnId)
   })
@@ -88,6 +91,24 @@ io.on("connection",(socket:Socket)=>{
 
     io.emit("mouseUpServer")
   
+  })
+
+  socket.on("playerConnectedClient",(socketData:any)=>{
+
+    users.push({
+      userName:socketData.userName,
+      sicketId:socket.id
+    })
+
+    socket.broadcast.emit("playerConnectedServer", socketData.userName)
+    
+
+  })
+
+  socket.on("disconnect",(socketData)=>{
+
+    
+
   })
 
 })
