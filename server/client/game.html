@@ -137,12 +137,16 @@ btnSend.addEventListener("click",()=>{
       alert("preencha a mensagem")
       return;
     }
-
-    socket.emit("message_sent",{
+    else
+    {
+      socket.emit("message_sent",{
       socket_id,
       user_name,
-      message:messageText.value
-    })   
+      message:messageText.value,
+          
+      }) 
+      messageText.value = ""
+    }
 
 })
 
