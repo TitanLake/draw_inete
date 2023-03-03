@@ -122,9 +122,12 @@ socket.on('playerConnected', (player) => {
   const newRow = document.createElement('tr');
   newRow.innerHTML = `<td>${player}</td>`;
   tableBody.appendChild(newRow);
+  socket.emit('playerChanged');
 });
 
-
+socket.on('disconnect', () => {
+  socket.emit('playerChanged');
+});
 
 btnSend.addEventListener("click",()=>{
 
