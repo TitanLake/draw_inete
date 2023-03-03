@@ -193,4 +193,12 @@ socket.on("startDraw",()=>{
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
 
-canvas.addEventListener("mouseup", () => isDrawing = false);
+canvas.addEventListener("mouseup", () => {
+   socket.emit("mouseUpClient") 
+});
+
+socket.on("mouseUpServer",()=>{
+
+    isDrawing = false
+    
+})

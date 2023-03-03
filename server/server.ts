@@ -84,6 +84,12 @@ io.on("connection",(socket:Socket)=>{
     socket.emit("changeToolServer", btnId)
   })
 
+  socket.on("mouseUpClient",()=>{
+
+    io.emit("mouseUpServer")
+  
+  })
+
 })
 
 app.get('/', function(req:Request, res:Response) {
