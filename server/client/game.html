@@ -122,9 +122,12 @@ socket.on('playerConnected', (player) => {
   const newRow = document.createElement('tr');
   newRow.innerHTML = `<td>${player}</td>`;
   tableBody.appendChild(newRow);
+  socket.emit('playerChanged');
 });
 
-
+socket.on('disconnect', () => {
+  socket.emit('playerChanged');
+});
 
 btnSend.addEventListener("click",()=>{
 
@@ -134,12 +137,16 @@ btnSend.addEventListener("click",()=>{
       alert("preencha a mensagem")
       return;
     }
-
-    socket.emit("message_sent",{
+    else
+    {
+      socket.emit("message_sent",{
       socket_id,
       user_name,
-      message:messageText.value
-    })   
+      message:messageText.value,
+          
+      }) 
+      messageText.value = ""
+    }
 
 })
 
