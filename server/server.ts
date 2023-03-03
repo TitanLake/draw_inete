@@ -99,8 +99,8 @@ io.on("connection",(socket:Socket)=>{
       sicketId:socket.id
     })
 
-    io.emit("playerConnectedServer", socketData.userName)
-    
+    socket.broadcast.emit("playerConnectedServer", socketData.userName)
+    socket.emit("playerConnectedServer", socketData.userName)
 
   })
 
