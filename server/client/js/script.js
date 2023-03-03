@@ -31,6 +31,8 @@ window.addEventListener("load", () => {
 });
 
 const drawRect = (e) => {
+
+    
     // if fillColor isn't checked draw a rect with border else draw rect with background
     if(!fillColor.checked) {
         // creating circle according to the mouse pointer
@@ -62,13 +64,14 @@ const startDraw = (e) => {
         posY:e.offsetY,
         brushWidth,
         selectedColor,
-        selectedColor
+        selectedColor,
+        canva:e
     })
 }
 
 socket.on("startDrawServer",(socketData)=>{
 
-    console.log(socketData);
+   
 
     isDrawing = true;
     prevMouseX = socketData.posX; // passing current mouseX position as prevMouseX value
@@ -77,6 +80,9 @@ socket.on("startDrawServer",(socketData)=>{
     ctx.beginPath(); // creating new path to draw
     ctx.lineWidth = socketData.brushWidth; // passing brushSize as line width
     ctx.strokeStyle = socketData.selectedColor; // passing selectedColor as stroke style
+
+    ctx.fillStyle = socketData.selectedColor; // passing selectedColor as fill style
+
     ctx.fillStyle = socketData.selectedColor; // passing selectedColor as fill styles
 
     // copying canvas data & passing as snapshot value.. this avoids dragging the image
@@ -86,22 +92,30 @@ socket.on("startDrawServer",(socketData)=>{
 
 const drawing = (e) => {
     
+    
+
     socket.emit("drawingClient", {
         posX:e.offsetX, posY:e.offsetY
-        
+        ,canva:e
     })
     
 }
 
-socket.on("drawingServer",(drawData)=>{
 
-    console.log("drawing");
+socket.on("changeToolServer",(btnId)=>{
+
+    console.log("tool changed");
+    document.querySelector(".options .active").classList.remove("active");
+    document.getElementById(btnId).classList.add("active");
+    selectedTool = btnId
+})
+
+socket.on("drawingServer",(drawData)=>{
 
     if(!isDrawing) return; // if isDrawing is false return from here
     ctx.putImageData(snapshot, 0, 0); // adding copied canvas data on to this canvas
 
-    console.log("drawing 2");
-
+    
     if(selectedTool === "brush" || selectedTool === "eraser") {
         // if selected tool is eraser then set strokeStyle to white 
         // to paint white color on to the existing canvas content else set the stroke color to selected color
@@ -111,20 +125,30 @@ socket.on("drawingServer",(drawData)=>{
         ctx.stroke(); // drawing/filling line with color
 
     } else if(selectedTool === "rectangle"){
-        drawRect(e);
+        
+        drawRect(drawData.canva);
+      
     } else if(selectedTool === "circle"){
-        drawCircle(e);
+        drawCircle(drawData.canva);
     } else {
-        drawTriangle(e);
+        drawTriangle(drawData.canva);
     }
+})
+
+socket.on("clearCanvaServer",()=>{
+
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing whole canvas
+    
+    setCanvasBackground();
 })
 
 toolBtns.forEach(btn => {
     btn.addEventListener("click", () => { // adding click event to all tool option
         // removing active class from the previous option and adding on current clicked option
-        document.querySelector(".options .active").classList.remove("active");
-        btn.classList.add("active");
-        selectedTool = btn.id;
+        
+        socket.emit("changeToolClient",btn.id)
+
     });
 });
 
@@ -133,6 +157,7 @@ sizeSlider.addEventListener("change", () => brushWidth = sizeSlider.value); // p
 colorBtns.forEach(btn => {
     btn.addEventListener("click", () => { // adding click event to all color button
         // removing selected class from the previous option and adding on current clicked option
+
         document.querySelector(".options .selected").classList.remove("selected");
         btn.classList.add("selected");
         // passing selected btn background color as selectedColor value
@@ -151,12 +176,7 @@ clearCanvas.addEventListener("click", () => {
 
 });
 
-socket.on("clearCanvaServer",()=>{
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing whole canvas
-console.log("clear");
 
-    setCanvasBackground();
-})
 
 saveImg.addEventListener("click", () => {
     const link = document.createElement("a"); // creating <a> element
