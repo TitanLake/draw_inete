@@ -99,6 +99,9 @@ io.on("connection",(socket:Socket)=>{
       sicketId:socket.id
     })
 
+    console.log(users);
+    
+
     socket.broadcast.emit("playerConnectedServer", socketData.userName)
     socket.emit("playerConnectedServer", socketData.userName)
 
