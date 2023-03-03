@@ -70,8 +70,7 @@ function removePlayerRow(playerName) {
   }
 }
 
-// Enable the start game button for the first player to connect
-let isFirstPlayer = true;
+
 const startGameBtn = document.getElementById('startGameBtn');
 if (startGameBtn !== null) {
   socket.on('playerConnectedServer', (playerName) => {
