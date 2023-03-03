@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -11,6 +11,8 @@
   </head>
 
   <body>
+
+    <main>
     <div style="display: block; margin: 0 auto;text-align: center;">
     <table class="table">
       <thead>
@@ -87,14 +89,15 @@
         </canvas>
       </section>
     </div>
-    <div class="block" style="margin-right: 5%;">
+    <div class="block" style="margin-right: 5%;" id="ChatBoard">
     <h1>Chat</h1>
     <div id="messages" style="height: 400px; overflow:scroll; background-color:whitesmoke;"></div>
     <input type="text" id="messageBox" placeholder="Type your message here" style="display: block; width: 100%; margin-bottom: 10px; padding: 10px;">
     <button id="sendMessage" title="Send Message!" style="width: 100%; height: 30px;">Send</button>
     </div>
 </div>
-  </body>
+ </main>
+ </body>
 </html>
 
 
@@ -147,6 +150,14 @@ btnSend.addEventListener("click",()=>{
 
 })
 
+// window.addEventListener('resize', resizeCanvas, false);
+
+// function resizeCanvas() {
+//   var canvas = document.getElementById('canva');
+//   canvas.width = window.innerWidth;
+//   canvas.height = window.innerHeight;
+// }
+
 socket.on('connect', (socketInfo) => {
   
 
@@ -174,11 +185,7 @@ socket.on('connect', (socketInfo) => {
       messageTextArea.innerHTML += `<p>«${element.username}» - ${element.message} </p>`
     
     });
-
-   
   })
-  
-  
 
 });
 

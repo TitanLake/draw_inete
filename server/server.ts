@@ -38,7 +38,7 @@ interface ISocketToUserWithMessage extends ISocketToUser
 
 
 const user_names = []
-const messages: IMessage[] = [] 
+const messages: IMessage[] = []
 
 
 io.on("connection",(socket:Socket)=>{

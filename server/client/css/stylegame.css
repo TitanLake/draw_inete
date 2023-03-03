@@ -18,7 +18,8 @@ body{
   width: 100%;
   gap: 10px;
   padding: 10px;
-  max-width: 1050px;
+  height: 100%;
+ 
 }
 section{
   background: #fff;
@@ -143,5 +144,44 @@ section{
 .drawing-board canvas{
   width: 100%;
   height: 100%;
-  min-height: 100%;
+  min-height: 500px;
+  min-width: 500px;
+}
+
+
+main{
+  display: flex;
+}
+
+@media screen and (max-width: 768px){
+ 
+  .container{
+    height: 100%;
+   display: block;
+  }
+  .tools-board{
+    width: 100%;
+    height: 100%;
+    min-height: 50px;
+    min-width: 50px;
+  }
+  
+  .drawing-board{
+    height: 100%;
+    min-height: 500px;
+    min-width: 500px;
+    width: 100%;
+  }
+
+  .drawing-board canvas{
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+
+    min-height: 100%;
+  }
+
+  main{
+    display: block;;
+  }
 }
