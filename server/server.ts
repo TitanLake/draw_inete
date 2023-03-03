@@ -47,6 +47,8 @@ const messages: IMessage[] = []
 
 io.on("connection",(socket:Socket)=>{
 
+ 
+  
 
   socket.on("load_messages", async function(socketInfo: ISocketToUser){
     console.log("loadinmessages");
@@ -102,8 +104,8 @@ io.on("connection",(socket:Socket)=>{
     console.log(users);
     
 
-    socket.broadcast.emit("playerConnectedServer", socketData.userName)
-    socket.emit("playerConnectedServer", socketData.userName)
+    socket.broadcast.emit("playerConnectedServer", users)
+    socket.emit("playerConnectedServer", users)
 
   })
 

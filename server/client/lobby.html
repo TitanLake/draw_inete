@@ -41,12 +41,16 @@
 <script>
 const socket = io.connect('http://localhost:8080/');
 
-socket.on('connection',socket=>{ 
+socket.on('connect', socketData=>{ 
+
+  console.log("hello");
+
   socket.emit('playerConnectedClient',
   {
     socketId:socket.id,
     userName:localStorage.getItem('userName')
   })
+
   localStorage.setItem('sockerId',socket.id);
 })
 
