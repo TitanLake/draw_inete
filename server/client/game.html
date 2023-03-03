@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - youtube.com/codingnepal -->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -116,14 +115,7 @@ const tableBody = document.getElementById('playersTable')
 
 
 
-socket.on('playerConnected', (player) => {
-  // code to add table row for new player
 
-  const newRow = document.createElement('tr');
-  newRow.innerHTML = `<td>${player}</td>`;
-  tableBody.appendChild(newRow);
-  socket.emit('playerChanged');
-});
 
 socket.on('disconnect', () => {
   socket.emit('playerChanged');
