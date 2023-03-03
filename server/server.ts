@@ -30,7 +30,6 @@ interface IMessage{
 interface ISocketToUserWithMessage extends ISocketToUser
 {
   
-   
     user_name:string
     socket_id:string,
     message:string

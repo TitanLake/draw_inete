@@ -30,30 +30,29 @@ window.addEventListener("load", () => {
     setCanvasBackground();
 });
 
-const drawRect = (e) => {
+const drawRect = (drawData) => {
 
-    
     // if fillColor isn't checked draw a rect with border else draw rect with background
     if(!fillColor.checked) {
         // creating circle according to the mouse pointer
-        return ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+        return ctx.strokeRect(drawData.posX, drawData.posY, prevMouseX - drawData.posX, prevMouseY - drawData.posY);
     }
-    ctx.fillRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+    ctx.fillRect(drawData.posX, drawData.posY, prevMouseX - drawData.posX, prevMouseY - drawData.posY);
 }
 
-const drawCircle = (e) => {
+const drawCircle = (drawData) => {
     ctx.beginPath(); // creating new path to draw circle
     // getting radius for circle according to the mouse pointer
-    let radius = Math.sqrt(Math.pow((prevMouseX - e.offsetX), 2) + Math.pow((prevMouseY - e.offsetY), 2));
-    ctx.arc(prevMouseX, prevMouseY, radius, 0, 2 * Math.PI); // creating circle according to the mouse pointer
+    let radius = Math.sqrt(Math.pow((prevMouseX - drawData.posX), 2) + Math.pow((drawData.posY - drawData.offsetY), 2));
+    ctx.arc(prevMouseX, drawData.posY, radius, 0, 2 * Math.PI); // creating circle according to the mouse pointer
     fillColor.checked ? ctx.fill() : ctx.stroke(); // if fillColor is checked fill circle else draw border circle
 }
 
-const drawTriangle = (e) => {
+const drawTriangle = (drawData) => {
     ctx.beginPath(); // creating new path to draw circle
     ctx.moveTo(prevMouseX, prevMouseY); // moving triangle to the mouse pointer
-    ctx.lineTo(e.offsetX, e.offsetY); // creating first line according to the mouse pointer
-    ctx.lineTo(prevMouseX * 2 - e.offsetX, e.offsetY); // creating bottom line of triangle
+    ctx.lineTo(drawData.posX, drawData.posY); // creating first line according to the mouse pointer
+    ctx.lineTo(prevMouseX * 2 - drawData.posX, drawData.posY); // creating bottom line of triangle
     ctx.closePath(); // closing path of a triangle so the third line draw automatically
     fillColor.checked ? ctx.fill() : ctx.stroke(); // if fillColor is checked fill triangle else draw border
 }
@@ -70,8 +69,6 @@ const startDraw = (e) => {
 }
 
 socket.on("startDrawServer",(socketData)=>{
-
-   
 
     isDrawing = true;
     prevMouseX = socketData.posX; // passing current mouseX position as prevMouseX value
@@ -97,7 +94,9 @@ const drawing = (e) => {
     socket.emit("drawingClient", {
         posX:e.offsetX, posY:e.offsetY
         ,
-        canva:e
+        canva:e,
+        offsetY:e.offsetY,
+        offsetX:e.offsetX
     })
     
 }
@@ -127,12 +126,12 @@ socket.on("drawingServer",(drawData)=>{
 
     } else if(selectedTool === "rectangle"){
         
-        drawRect(drawData.canva);
+        drawRect(drawData);
       
     } else if(selectedTool === "circle"){
-        drawCircle(drawData.canva);
+        drawCircle(drawData);
     } else {
-        drawTriangle(drawData.canva);
+        drawTriangle(drawData);
     }
 })
 
