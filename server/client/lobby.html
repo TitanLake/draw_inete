@@ -77,15 +77,34 @@ function removePlayerRow(playerName) {
 
 const startGameBtn = document.getElementById('startGameBtn');
 if (startGameBtn !== null) {
-  socket.on('playerConnectedServer', (playerName) => {
-    addPlayerRow(playerName.userName);
+  socket.on('playerConnectedServer', (players) => {
+    const tableBody = document.getElementById('playersTable');
+
+    for (let i = 0; i < tableBody.rows.length; i++) {
+      tableBody.deleteRow(i);
+      
+  }
+
+    players.array.forEach(element => {
+      addPlayerRow(element.userName);
+    });
 
   });
   
   socket.on('playerDisconnectedServer', (playerName) => {
-    removePlayerRow(playerName);
+    
+    const tableBody = document.getElementById('playersTable');
 
-  });
+for (let i = 0; i < tableBody.rows.length; i++) {
+  tableBody.deleteRow(i);
+  
+}
+
+players.array.forEach(element => {
+  removePlayerRow(element.userName);
+});
+
+});
 }
 
 
