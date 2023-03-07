@@ -43,15 +43,17 @@ const socket = io.connect('http://localhost:8080/');
 
 socket.on('connect', socketData=>{ 
 
-  console.log("hello");
-
-  socket.emit('playerConnectedClient',
+  if(localStorage.getItem('sockerId') == null)
   {
-    socketId:socket.id,
-    userName:localStorage.getItem('userName')
-  })
+    socket.emit('playerConnectedClient',
+    {
+      socketId:socket.id,
+      userName:localStorage.getItem('userName')
+    })
 
-  localStorage.setItem('sockerId',socket.id);
+    localStorage.setItem('sockerId',socket.id);
+
+  }
 })
 
 
@@ -84,11 +86,15 @@ if (startGameBtn !== null) {
     console.log(players);
 
     for (let i = 0; i < tableBody.rows.length; i++) {
-      tableBody.deleteRow(i);}
 
-    players.forEach(element => {
-      addPlayerRow(element.userName);
-    });
+      console.log(tableBody.rows.length);
+
+      tableBody.deleteRow(i);
+    }
+
+      players.forEach(element => {
+        addPlayerRow(element.userName);
+      });
 
   });
   
@@ -96,14 +102,14 @@ if (startGameBtn !== null) {
     
     const tableBody = document.getElementById('playersTable');
 
-for (let i = 0; i < tableBody.rows.length; i++) {
-  tableBody.deleteRow(i);
-  
-}
+    for (let i = 0; i < tableBody.rows.length; i++) {
+      tableBody.deleteRow(i);
+      
+    }
 
-players.forEach(element => {
-  removePlayerRow(element.userName);
-});
+    players.forEach(element => {
+      removePlayerRow(element.userName);
+    });
 
 });
 }
