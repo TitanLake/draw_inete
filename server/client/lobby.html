@@ -41,12 +41,16 @@
 <script>
 const socket = io.connect('http://localhost:8080/');
 
-socket.on('connection',socket=>{ 
+socket.on('connect', socketData=>{ 
+
+  console.log("hello");
+
   socket.emit('playerConnectedClient',
   {
     socketId:socket.id,
     userName:localStorage.getItem('userName')
   })
+
   localStorage.setItem('sockerId',socket.id);
 })
 
@@ -73,17 +77,14 @@ function removePlayerRow(playerName) {
 
 const startGameBtn = document.getElementById('startGameBtn');
 if (startGameBtn !== null) {
-  socket.on('playerConnectedServer', (users) => {
-
-    //apagar tudo da tabela e ciclar os users para adicionar rows
-    addPlayerRow(playerName);
-   console.log(playerName);
+  socket.on('playerConnectedServer', (playerName) => {
+    addPlayerRow(playerName.userName);
 
   });
   
-  socket.on('playerDisconnectedServer', (users) => {
+  socket.on('playerDisconnectedServer', (playerName) => {
     removePlayerRow(playerName);
-     //apagar tudo da tabela e ciclar os users para remover rows
+
   });
 }
 

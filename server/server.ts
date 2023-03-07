@@ -36,7 +36,7 @@ interface ISocketToUserWithMessage extends ISocketToUser
 }
 
 interface IUser{
-  sicketId:string,
+  socketId:string,
   userName :string
 }
 
@@ -51,7 +51,7 @@ io.on("connection",(socket:Socket)=>{
   
 
   socket.on("load_messages", async function(socketInfo: ISocketToUser){
-    console.log("loadinmessages");
+    
 
     io.emit("messages_load", messages) // emit load messages to only user
 
@@ -98,11 +98,8 @@ io.on("connection",(socket:Socket)=>{
 
     users.push({
       userName:socketData.userName,
-      sicketId:socket.id
+      socketId:socket.id
     })
-
-    console.log(users);
-    
 
     socket.broadcast.emit("playerConnectedServer", users)
     socket.emit("playerConnectedServer", users)
