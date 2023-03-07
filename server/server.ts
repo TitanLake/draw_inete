@@ -41,7 +41,7 @@ interface IUser{
 }
 
 
-const users:IUser[] = []
+let users:IUser[] = []
 const messages: IMessage[] = [] 
 
 
@@ -111,7 +111,15 @@ io.on("connection",(socket:Socket)=>{
 
   socket.on("disconnect",(socketData)=>{
 
-    
+   
+    const user =users.find(u => u.socketId == socket.id)
+
+    users = users.filter(u => (u !== user))
+
+    socket.broadcast.emit('user_disconnect',{
+      userName:user?.userName,
+      socketId:user?.socketId 
+    });
 
   })
 

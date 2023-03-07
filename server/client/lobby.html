@@ -43,8 +43,7 @@ const socket = io.connect('http://localhost:8080/');
 
 socket.on('connect', socketData=>{ 
 
-  if(localStorage.getItem('sockerId') == null)
-  {
+  
     socket.emit('playerConnectedClient',
     {
       socketId:socket.id,
@@ -53,7 +52,7 @@ socket.on('connect', socketData=>{
 
     localStorage.setItem('sockerId',socket.id);
 
-  }
+  
 })
 
 
@@ -111,7 +110,22 @@ if (startGameBtn !== null) {
       removePlayerRow(element.userName);
     });
 
-});
+  });
+
+  socket.on("disconnect",socketData=>{
+
+    console.log("ola");
+    removePlayerRow(localStorage.getItem('userName'))
+
+  })
+
+  socket.on("user_disconnect",(player)=>{
+
+    console.log(player);
+
+    removePlayerRow(player.userName)
+  })
+
 }
 
 
