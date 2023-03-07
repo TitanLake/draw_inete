@@ -78,8 +78,8 @@ function removePlayerRow(playerName) {
 const startGameBtn = document.getElementById('startGameBtn');
 if (startGameBtn !== null) {
   socket.on('playerConnectedServer', (playerName) => {
-    addPlayerRow(playerName);
-   console.log(playerName);
+    addPlayerRow(playerName.userName);
+
   });
   
   socket.on('playerDisconnectedServer', (playerName) => {
