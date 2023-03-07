@@ -96,11 +96,14 @@ io.on("connection",(socket:Socket)=>{
 
   socket.on("playerConnectedClient",(socketData:any)=>{
 
-    users.push({
-      userName:socketData.userName,
-      socketId:socket.id
-    })
-
+    if(socketData.userName  != "")
+    {
+      users.push({
+        userName:socketData.userName,
+        socketId:socket.id
+      })
+    }
+    
     socket.broadcast.emit("playerConnectedServer", users)
     socket.emit("playerConnectedServer", users)
 
