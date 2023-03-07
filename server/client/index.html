@@ -15,7 +15,7 @@
       <input type="text" class="form-control" style="margin:2%" id="SaveUserName">
       <div class="row buttons" style="align-items:center;justify-content: center;">
         <a href="./lobby.html">
-          <button class="enter" id="enter">Enter</button>
+          <button class="enter" id="enter" disabled>Enter</button>
         </a>          
         <a href="./about.html">          
           <button class="info">i</button>  
@@ -25,10 +25,23 @@
   </body>
 </html>
 <script>
+
+
+
+
+
+
+
   (function()
   {
-    var input = document.getElementById('SaveUserName');              
+    var input = document.getElementById('SaveUserName');
+    var button = document.getElementById('enter');              
     
+    input.addEventListener('input', function() {
+      button.disabled = input.value.length === 0;
+    });
+    
+
     document.getElementById("enter").onclick = function () {                
       localStorage && (localStorage.setItem('userName', input.value));
 

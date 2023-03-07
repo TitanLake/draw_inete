@@ -80,12 +80,13 @@ if (startGameBtn !== null) {
   socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
 
-    for (let i = 0; i < tableBody.rows.length; i++) {
-      tableBody.deleteRow(i);
-      
-  }
 
-    players.array.forEach(element => {
+    console.log(players);
+
+    for (let i = 0; i < tableBody.rows.length; i++) {
+      tableBody.deleteRow(i);}
+
+    players.forEach(element => {
       addPlayerRow(element.userName);
     });
 
@@ -100,15 +101,12 @@ for (let i = 0; i < tableBody.rows.length; i++) {
   
 }
 
-players.array.forEach(element => {
+players.forEach(element => {
   removePlayerRow(element.userName);
 });
 
 });
 }
-
-
-
 
 
 
