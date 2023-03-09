@@ -26,7 +26,7 @@
     </tbody>
       </table>
       <div class="row buttons" style="align-items:center;justify-content: center;">
-        <button class="create" id="startGameBtn">Start Game</button>
+        <button class="create" id="startGameBtn" onclick="location.href='./game.html'">Start Game</button> 
         <a href="./about.html">
           <button class="info">i</button>  
         </a> 
@@ -81,11 +81,12 @@ if (startGameBtn !== null) {
   socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
 
-
-    console.log(players);
+    if(players.length>=2)
+    {
+      startGameBtn.disabled=false;
+    }
 
     for (let i = 0; i < tableBody.rows.length; i++) {
-
       console.log(tableBody.rows.length);
 
       tableBody.deleteRow(i);

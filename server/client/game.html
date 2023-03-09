@@ -142,8 +142,54 @@ btnSend.addEventListener("click",()=>{
 
 })
 
+
+// Add a new row to the players table for a new player
+function addPlayerRow(playerName) {
+  const tableBody = document.getElementById('playersTable');
+  const newRow = tableBody.insertRow();
+  const nameCell = newRow.insertCell(0);
+  nameCell.innerHTML = playerName;
+}
+
+// Remove a row from the players table for a player who left
+function removePlayerRow(playerName) {
+  const tableBody = document.getElementById('playersTable');
+  for (let i = 0; i < tableBody.rows.length; i++) {
+    if (tableBody.rows[i].cells[0].innerHTML === playerName) {
+      tableBody.deleteRow(i);
+      break;
+    }
+  }
+}
+
+
 socket.on('connect', (socketInfo) => {
   
+  socket.emit('playerJoinedClient',
+    {
+      socketId:socket.id,
+      userName:localStorage.getItem('userName')
+    })
+
+    localStorage.setItem('sockerId',socket.id);
+
+
+  socket.on('playerJoinedServer', (players) => {
+    const tableBody = document.getElementById('playersTable');
+
+    for (let i = 0; i < tableBody.rows.length; i++) {
+      console.log(tableBody.rows.length);
+
+      tableBody.deleteRow(i);
+    }
+
+      players.forEach(element => {
+        addPlayerRow(element.userName);
+      });
+
+  });
+  
+
 
   socket.emit("load_messages",{
       socket_id,
