@@ -78,6 +78,7 @@
         <div class="row buttons">
           <button class="clear-canvas">Clear Canvas</button>
           <button class="save-img">Save As Image</button>
+          <button class="save-img" style="background-color: yellow;color: black;">End Game</button>
         </div>
       </section>
       <section class="drawing-board">
@@ -175,10 +176,7 @@ socket.on('connect', (socketInfo) => {
 
   socket.on('playerJoinedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
-
     for (let i = 0; i < tableBody.rows.length; i++) {
-      console.log(tableBody.rows.length);
-
       tableBody.deleteRow(i);
     }
     
