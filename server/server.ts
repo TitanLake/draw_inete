@@ -40,10 +40,26 @@ interface IUser{
   userName :string
 }
 
+let words = [
+  "INETE",
+  "programação",
+  "base de dados",
+  "computador",
+  "teclado",
+  "java",
+  "python",
+  "ruby",
+  "php",
+  "inteligencia artificial",
+  "microsoft",
+  "google",
+  "go",
+  "android"
+]
 
 let users:IUser[] = []
 const messages: IMessage[] = [] 
-
+let generatedWord = ""
 
 io.on("connection",(socket:Socket)=>{
 
@@ -109,8 +125,35 @@ io.on("connection",(socket:Socket)=>{
 
   })
 
-  socket.on("disconnect",(socketData)=>{
+  // game started
 
+  socket.on("gameStarted",(socketData)=>{
+
+    if(generatedWord == ""){
+      generatedWord = words[5]
+
+      io.emit("generatedWord", generatedWord)
+
+    }
+
+  })
+
+  socket.on("playeJoinedClient",(socketData:any)=>{
+
+    if(socketData.userName  != "")
+    {
+      users.push({
+        userName:socketData.userName,
+        socketId:socket.id
+      })
+    }
+    
+    socket.broadcast.emit("playerJoinedServer", users)
+    socket.emit("playerJoinedServer", users)
+
+  })
+
+  socket.on("disconnect",(socketData)=>{
    
     const user =users.find(u => u.socketId == socket.id)
 
@@ -134,3 +177,29 @@ app.get('/', function(req:Request, res:Response) {
 server.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
+
+
+/*
+
+TO DO
+
+  fluxo do jogo
+
+  eventos
+  - userjoin 
+    -userJoinedServer responde todos os users na sala
+
+  - startGame
+    - gameStarted avisa que o jogo comecou
+
+  escolher um user para receber a palavra
+    userChosen
+    e escerever no chat
+
+  - generatedWord = user recebe a palavra e desenha ( ele escolhe quando acaba )
+    
+    verificar o chat, quando alguem acertar emit evento acertou para o user que acertou 
+
+    escolher outro user
+
+*/
