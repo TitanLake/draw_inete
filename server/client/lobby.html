@@ -58,9 +58,14 @@ socket.on('connect', socketData=>{
 function startGame()
 {
   socket.emit('gameStartedClick');
-
-  location.href='./game.html';
 }
+
+socket.on('gameStartedClick',()=>
+{
+  location.href='./game.html'
+})
+
+
 
 // Add a new row to the players table for a new player
 function addPlayerRow(playerName) {
