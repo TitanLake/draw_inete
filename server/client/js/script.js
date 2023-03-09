@@ -190,6 +190,18 @@ socket.on("startDraw",()=>{
 
 })
 
+/*socket.on('startDraw', (playerName) => {
+    if (playerName === user_name) {
+      // If the current player is the drawing player, enable drawing
+      currentDrawer = user_name;
+      enableDrawing();
+    } else {
+      // Otherwise, disable drawing
+      currentDrawer = null;
+      disableDrawing();
+    }
+  });*/
+
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
 
