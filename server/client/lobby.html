@@ -125,16 +125,11 @@ if (startGameBtn !== null) {
   });
 
   socket.on("disconnect",socketData=>{
-
-    console.log("ola");
     removePlayerRow(localStorage.getItem('userName'))
-
   })
 
   socket.on("user_disconnect",(player)=>{
-
-    console.log(player);
-
+  
     removePlayerRow(player.userName)
   })
 

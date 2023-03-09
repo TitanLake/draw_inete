@@ -114,15 +114,18 @@ io.on("connection",(socket:Socket)=>{
 
     if(socketData.userName  != "")
     {
+
+      console.log(users);
+    
       users.push({
         userName:socketData.userName,
         socketId:socket.id
       })
+
+      console.log(users);
+      
     }
 
-    console.log(users);
-    
-    
     socket.broadcast.emit("playerConnectedServer", users)
     socket.emit("playerConnectedServer", users)
 
@@ -155,7 +158,8 @@ io.on("connection",(socket:Socket)=>{
         socketId:socket.id
       })
     }
-    
+
+
     socket.broadcast.emit("playerJoinedServer", users)
     socket.emit("playerJoinedServer", users)
 
@@ -163,7 +167,9 @@ io.on("connection",(socket:Socket)=>{
 
   socket.on("disconnect",(socketData)=>{
    
-    const user =users.find(u => u.socketId == socket.id)
+    const user = users.find(u => u.socketId == socket.id)
+
+    console.log(user)
 
     let users2:IUser[] = []
 

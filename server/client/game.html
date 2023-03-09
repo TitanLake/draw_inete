@@ -181,10 +181,10 @@ socket.on('connect', (socketInfo) => {
 
       tableBody.deleteRow(i);
     }
-
-      players.forEach(element => {
-        addPlayerRow(element.userName);
-      });
+    
+    players.forEach(element => {
+      addPlayerRow(element.userName);
+    });
 
   });
   
