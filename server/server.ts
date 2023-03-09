@@ -138,6 +138,7 @@ io.on("connection",(socket:Socket)=>{
 
   })
 
+ 
   socket.on("playeJoinedClient",(socketData:any)=>{
 
     if(socketData.userName  != "")
@@ -186,7 +187,7 @@ TO DO
   fluxo do jogo
 
   eventos
-  - userjoin 
+  - userJoinedClient
     -userJoinedServer responde todos os users na sala
 
   - startGame
@@ -197,6 +198,8 @@ TO DO
     e escerever no chat
 
   - generatedWord = user recebe a palavra e desenha ( ele escolhe quando acaba )
+
+  - userNoChosen
     
     verificar o chat, quando alguem acertar emit evento acertou para o user que acertou 
 
