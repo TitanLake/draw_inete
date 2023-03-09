@@ -26,7 +26,7 @@
     </tbody>
       </table>
       <div class="row buttons" style="align-items:center;justify-content: center;">
-        <button class="create" id="startGameBtn" onclick="location.href='./game.html'">Start Game</button> 
+        <button class="create" id="startGameBtn" onclick="startGame">Start Game</button> 
         <a href="./about.html">
           <button class="info">i</button>  
         </a> 
@@ -54,6 +54,17 @@ socket.on('connect', socketData=>{
 
   
 })
+
+function startGame()
+{
+  socket.emit('gameStartedClick');
+}
+
+socket.on('gameStartedClick',()=>
+{
+  location.href='./game.html'
+})
+
 
 
 // Add a new row to the players table for a new player
