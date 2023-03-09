@@ -85,7 +85,7 @@ io.on("connection",(socket:Socket)=>{
   })
 
   socket.on("startDrawClient",(data)=>{
-    io.emit("startDrawServer",data)
+    io.emit("startDrawServer", data)
   })
 
   socket.on("drawingClient",(data)=>{
@@ -119,6 +119,9 @@ io.on("connection",(socket:Socket)=>{
         socketId:socket.id
       })
     }
+
+    console.log(users);
+    
     
     socket.broadcast.emit("playerConnectedServer", users)
     socket.emit("playerConnectedServer", users)
@@ -143,7 +146,7 @@ io.on("connection",(socket:Socket)=>{
   })
 
  
-  socket.on("playeJoinedClient",(socketData:any)=>{
+  socket.on("playerJoinedClient",(socketData:any)=>{
 
     if(socketData.userName  != "")
     {
@@ -162,7 +165,14 @@ io.on("connection",(socket:Socket)=>{
    
     const user =users.find(u => u.socketId == socket.id)
 
-    users = users.filter(u => (u !== user))
+    let users2:IUser[] = []
+
+    users.map((u)=>{
+      if(u.userName !== user?.userName)
+        users2.push(u)
+    })
+
+    users = users2
 
     socket.broadcast.emit('user_disconnect',{
       userName:user?.userName,
