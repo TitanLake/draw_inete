@@ -178,10 +178,11 @@ socket.on('connect', (socketInfo) => {
       tableBody.deleteRow(i);
     }
     
-    console.log(players)
+    
 
     players.forEach(element => {
       addPlayerRow(element.userName);
+      console.log(element.userName)
     });
 
   });
