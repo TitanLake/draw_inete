@@ -115,14 +115,14 @@ io.on("connection",(socket:Socket)=>{
     if(socketData.userName  != "")
     {
 
-      console.log(users);
+     
     
       users.push({
         userName:socketData.userName,
         socketId:socket.id
       })
 
-      console.log(users);
+     
       
     }
 

@@ -163,36 +163,67 @@ function removePlayerRow(playerName) {
 
 socket.on('connect', (socketInfo) => {
   
-  socket.emit('playerJoinedClient',
+
+  
+ socket.emit('playerConnectedClient',
     {
       socketId:socket.id,
       userName:localStorage.getItem('userName')
     })
 
-    localStorage.setItem('sockerId',socket.id);
+  localStorage.setItem('sockerId',socket.id);
 
-
-  socket.on('playerJoinedServer', (players) => {
+  socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
+
+    if(players.length>=2)
+    {
+      startGameBtn.disabled=false;
+    }
+
     for (let i = 0; i < tableBody.rows.length; i++) {
+      console.log(tableBody.rows.length);
+
       tableBody.deleteRow(i);
     }
-    
-    
 
-    players.forEach(element => {
-      addPlayerRow(element.userName);
-      console.log(element.userName)
-    });
+      players.forEach(element => {
+        addPlayerRow(element.userName);
+      });
 
   });
   
+  socket.on('playerDisconnectedServer', (playerName) => {
+    
+    const tableBody = document.getElementById('playersTable');
+
+    for (let i = 0; i < tableBody.rows.length; i++) {
+      tableBody.deleteRow(i);
+      
+    }
+
+    players.forEach(element => {
+      removePlayerRow(element.userName);
+    });
+
+  });
+
+  socket.on("disconnect",socketData=>{
+    removePlayerRow(localStorage.getItem('userName'))
+  })
+
+  socket.on("user_disconnect",(player)=>{
+  
+    removePlayerRow(player.userName)
+  })
+  
+
   socket.emit("load_messages",{
       socket_id,
       user_name
     })
 
-  socket_id = "ola2"
+  
 
   socket.on("message_received",()=>{
     
