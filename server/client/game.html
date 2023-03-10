@@ -147,9 +147,12 @@ btnSend.addEventListener("click",()=>{
 // Add a new row to the players table for a new player
 function addPlayerRow(playerName) {
   const tableBody = document.getElementById('playersTable');
-  const newRow = tableBody.insertRow();
-  const nameCell = newRow.insertCell(0);
-  nameCell.innerHTML = playerName;
+  tableBody.innerHTML = ''; // clear the table body
+  playerName.forEach((name) => {
+    const newRow = tableBody.insertRow();
+    const nameCell = newRow.insertCell(0);
+    nameCell.innerHTML = name;
+  });
 }
 
 // Remove a row from the players table for a player who left
