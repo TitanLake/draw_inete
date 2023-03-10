@@ -63,9 +63,6 @@ let generatedWord = ""
 
 io.on("connection",(socket:Socket)=>{
 
- 
-  
-
   socket.on("load_messages", async function(socketInfo: ISocketToUser){
     
 
@@ -114,16 +111,12 @@ io.on("connection",(socket:Socket)=>{
 
     if(socketData.userName  != "")
     {
-
-      console.log(users);
     
       users.push({
         userName:socketData.userName,
         socketId:socket.id
       })
 
-      console.log(users);
-      
     }
 
     socket.broadcast.emit("playerConnectedServer", users)
@@ -169,8 +162,6 @@ io.on("connection",(socket:Socket)=>{
    
     const user = users.find(u => u.socketId == socket.id)
 
-    console.log(user)
-
     let users2:IUser[] = []
 
     users.map((u)=>{
@@ -180,7 +171,9 @@ io.on("connection",(socket:Socket)=>{
 
     users = users2
 
-    socket.broadcast.emit('user_disconnect',{
+    console.log(users2)
+
+    io.emit('user_disconnect',{
       userName:user?.userName,
       socketId:user?.socketId 
     });
