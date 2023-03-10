@@ -58,6 +58,8 @@ socket.on('connect', socketData=>{
 function startGame()
 {
   socket.emit('gameStartedClick');
+  // Emit the event to all connected clients
+  io.emit('gameStartedClick');
 }
 
 socket.on('gameStartedClick',()=>
@@ -89,6 +91,7 @@ function removePlayerRow(playerName) {
 
 const startGameBtn = document.getElementById('startGameBtn');
 if (startGameBtn !== null) {
+
   socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
 

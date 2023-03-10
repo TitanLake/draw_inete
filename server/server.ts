@@ -134,7 +134,7 @@ io.on("connection",(socket:Socket)=>{
   // game started
 
   socket.on("gameStartedClick",()=>{
-    socket.broadcast.emit("gameStartedClick")
+    io.emit("gameStartedClick");
   })
 
   socket.on("gameStarted",(socketData)=>{
