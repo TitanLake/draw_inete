@@ -162,7 +162,6 @@ function removePlayerRow(playerName) {
 
 socket.on('connect', (socketInfo) => {
   
-
   
  socket.emit('playerConnectedClient',
     {
@@ -201,6 +200,7 @@ socket.on('connect', (socketInfo) => {
     }
 
     players.forEach(element => {
+      console.log(element.userName+' removido da tabela')
       removePlayerRow(element.userName);
     });
 
@@ -247,7 +247,7 @@ socket.on('connect', (socketInfo) => {
 
 });
 
-function enableDrawing() {
+/*function enableDrawing() {
   canvas.addEventListener('mousedown', startDrawing);
   canvas.addEventListener('mousemove', draw);
   canvas.addEventListener('mouseup', stopDrawing);
@@ -258,7 +258,7 @@ function disableDrawing() {
   canvas.removeEventListener('mousemove', draw);
   canvas.removeEventListener('mouseup', stopDrawing);
 }
-
+*/
 </script>
 
 

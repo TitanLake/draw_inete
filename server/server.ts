@@ -224,8 +224,21 @@ TO DO
 
     escolher outro user
 
+
+  to do update maxi 11/03=>
+
+  fill colour bugado nao desliga nem liga nos outros utilizadores
+
+  duplicação de players
+    -quando damos refresh, o servidor tem de ter o socket antigo aberto para o utilizador, então no nosso quando
+    é criada uma nova conexão ele pensa que é um novo utilizador e mete na tabela o mesmo utilizador, antes e depois do refresh
+    temos de usar o local storage para verificar se já existe e se existir reconectar ao invés de criar outra ligação
+    (devido a isso ele adiciona duplicados à tabela)
+
+  user disconnection e reconnection
+    -implementar user disconnection e reconnection atraves do server(para remover bem os users da tabela)
+
+  adicionar error handlings
+
 */
 
-//fill colour bugado nao desliga nos outros utilizadores quando um deles desenhou e depois desligou
-//players quando se conectam um deles duplica na tabela, why?
-//
