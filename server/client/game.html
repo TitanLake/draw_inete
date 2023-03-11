@@ -174,7 +174,7 @@ socket.on('connect', (socketInfo) => {
 
   socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
-    console.log(players)
+    
     /*if(players.length>=2)
     {
       startGameBtn.disabled=false;
@@ -185,6 +185,7 @@ socket.on('connect', (socketInfo) => {
     }
 
       players.forEach(element => {
+        console.log(element.userName+' adicionado à tabela')
         addPlayerRow(element.userName);
       });
 

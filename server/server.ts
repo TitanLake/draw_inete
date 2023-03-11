@@ -1,6 +1,6 @@
 import path from "path";
 
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 const app = require('express')();
 import express from "express";
 const server = require('http').createServer(app);
@@ -226,4 +226,6 @@ TO DO
 
 */
 
-//fill colour bugado nao desliga nos outros utilizadores quando um liga
+//fill colour bugado nao desliga nos outros utilizadores quando um deles desenhou e depois desligou
+//players quando se conectam um deles duplica na tabela, why?
+//
