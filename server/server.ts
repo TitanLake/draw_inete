@@ -128,8 +128,8 @@ io.on("connection",(socket:Socket)=>{
 
     socket.broadcast.emit("playerConnectedServer", users)
     socket.emit("playerConnectedServer", users)
-
   })
+
 
   // game started
 
@@ -164,7 +164,6 @@ io.on("connection",(socket:Socket)=>{
     socket.emit("playerJoinedServer", users)
 
   })
-
   socket.on("disconnect",(socketData)=>{
    
     const user = users.find(u => u.socketId == socket.id)
@@ -226,3 +225,5 @@ TO DO
     escolher outro user
 
 */
+
+//fill colour bugado nao desliga nos outros utilizadores quando um liga
