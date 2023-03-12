@@ -115,8 +115,6 @@ const messageText = document.getElementById("messageBox")
 const tableBody = document.getElementById('playersTable')
 
 
-
-
 socket.on('disconnect', () => {
   socket.emit('playerChanged');
 });
@@ -174,20 +172,19 @@ socket.on('connect', (socketInfo) => {
   socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
     
-    tableBody.innerHTML = ""
-
-    /*
-    for (let i = 0; i < tableBody.rows.length; i++) {
-      tableBody.deleteRow(i);
+    /*if(players.length>=2)
+    {
+      startGameBtn.disabled=false;
     }*/
 
-    players.forEach(element => {
-      console.log(element.userName+' adicionado à tabela')
-      //addPlayerRow(element.userName);
+    for (let i = 0; i < tableBody.rows.length; i++) {
+      tableBody.deleteRow(i);
+    }
 
-      tableBody.innerHTML += `<tr><td>${element.userName}</td></tr>`
-
-    });
+      players.forEach(element => {
+        console.log(element.userName+' adicionado à tabela')
+        addPlayerRow(element.userName);
+      });
 
   });
   
@@ -195,8 +192,8 @@ socket.on('connect', (socketInfo) => {
     
     const tableBody = document.getElementById('playersTable');
 
-    /*
     for (let i = 0; i < tableBody.rows.length; i++) {
+      console.log(element.userName+' removido da tabela')
       tableBody.deleteRow(i);
       
     }
@@ -204,21 +201,6 @@ socket.on('connect', (socketInfo) => {
     players.forEach(element => {
       console.log(element.userName+' removido da tabela')
       removePlayerRow(element.userName);
-    });*/
-
-    tableBody.innerHTML = ""
-
-    /*
-    for (let i = 0; i < tableBody.rows.length; i++) {
-      tableBody.deleteRow(i);
-    }*/
-
-    players.forEach(element => {
-      console.log(element.userName+' adicionado à tabela')
-      //addPlayerRow(element.userName);
-
-      tableBody.innerHTML += `<tr><td>${element.userName}</td></tr>`
-
     });
 
   });
@@ -227,7 +209,9 @@ socket.on('connect', (socketInfo) => {
     removePlayerRow(localStorage.getItem('userName'))
   })
 
- 
+  socket.on("user_disconnect",(player)=>{
+    removePlayerRow(player.userName)
+  })
   
 
   socket.emit("load_messages",{
