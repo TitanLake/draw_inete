@@ -161,6 +161,7 @@ function removePlayerRow(playerName) {
 socket.on('connect', (socketInfo) => {
   
   
+  z
   socket.emit('playerConnectedClient',
     {
       socketId:socket.id,
@@ -219,7 +220,6 @@ socket.on('connect', (socketInfo) => {
       user_name
     })
 
-  
 
   socket.on("message_received",()=>{
     
@@ -258,6 +258,7 @@ function disableDrawing() {
   canvas.removeEventListener('mouseup', stopDrawing);
 }
 */
+
 </script>
 
 

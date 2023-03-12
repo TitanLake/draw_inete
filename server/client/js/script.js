@@ -217,3 +217,7 @@ socket.on("mouseUpServer",()=>{
     isDrawing = false
     
 })
+
+socket.on("colorChanged",(color)=>{
+    selectedColor = color;
+})
