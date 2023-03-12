@@ -174,19 +174,20 @@ socket.on('connect', (socketInfo) => {
   socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
     
-    /*if(players.length>=2)
-    {
-      startGameBtn.disabled=false;
-    }*/
+    tableBody.innerHTML = ""
 
+    /*
     for (let i = 0; i < tableBody.rows.length; i++) {
       tableBody.deleteRow(i);
-    }
+    }*/
 
-      players.forEach(element => {
-        console.log(element.userName+' adicionado à tabela')
-        addPlayerRow(element.userName);
-      });
+    players.forEach(element => {
+      console.log(element.userName+' adicionado à tabela')
+      //addPlayerRow(element.userName);
+
+      tableBody.innerHTML += `<tr><td>${element.userName}</td></tr>`
+
+    });
 
   });
   
@@ -194,6 +195,7 @@ socket.on('connect', (socketInfo) => {
     
     const tableBody = document.getElementById('playersTable');
 
+    /*
     for (let i = 0; i < tableBody.rows.length; i++) {
       tableBody.deleteRow(i);
       
@@ -202,6 +204,21 @@ socket.on('connect', (socketInfo) => {
     players.forEach(element => {
       console.log(element.userName+' removido da tabela')
       removePlayerRow(element.userName);
+    });*/
+
+    tableBody.innerHTML = ""
+
+    /*
+    for (let i = 0; i < tableBody.rows.length; i++) {
+      tableBody.deleteRow(i);
+    }*/
+
+    players.forEach(element => {
+      console.log(element.userName+' adicionado à tabela')
+      //addPlayerRow(element.userName);
+
+      tableBody.innerHTML += `<tr><td>${element.userName}</td></tr>`
+
     });
 
   });
