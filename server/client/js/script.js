@@ -6,6 +6,7 @@ colorBtns = document.querySelectorAll(".colors .option"),
 colorPicker = document.querySelector("#color-picker"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img")
+
 if(canvas!=null)
 {
     ctx = canvas.getContext("2d");
@@ -16,6 +17,15 @@ isDrawing = false,
 selectedTool = "brush",
 brushWidth = 5,
 selectedColor = "#000";
+
+const fillColorCheckedChanged = ()=>{
+
+    socket.emit("fillColorCheckedChanged")
+}
+
+
+fillColor.addEventListener("click",fillColorCheckedChanged);
+
 
 const setCanvasBackground = () => {
     // setting whole canvas background to white, so the downloaded img background will be white
@@ -68,6 +78,10 @@ const startDraw = (e) => {
         canva:e
     })
 }
+
+socket.on("fillColorCheckedChanged",()=>{
+    fillColor.checked = !fillColor.checked
+})
 
 socket.on("startDrawServer",(socketData)=>{
 

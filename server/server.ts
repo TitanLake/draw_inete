@@ -81,6 +81,10 @@ io.on("connection",(socket:Socket)=>{
     
   })
 
+  socket.on("fillColorCheckedChanged",()=>{
+    socket.broadcast.emit("fillColorCheckedChanged")
+  })
+
   socket.on("startDrawClient",(data)=>{
     io.emit("startDrawServer", data)
   })
@@ -165,6 +169,8 @@ io.on("connection",(socket:Socket)=>{
 
 
   })
+
+
 
   socket.on("disconnect",(socketData)=>{
    
