@@ -74,7 +74,6 @@ const startDraw = (e) => {
         posY:e.offsetY,
         brushWidth,
         selectedColor,
-        selectedColor,
         canva:e
     })
 }
@@ -177,6 +176,7 @@ colorBtns.forEach(btn => {
         btn.classList.add("selected");
         // passing selected btn background color as selectedColor value
         selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
+        socket.emit('colorChanged',selectedColor);
     });
 });
 
@@ -205,18 +205,6 @@ socket.on("startDraw",()=>{
 
 })
 
-/*socket.on('startDraw', (playerName) => {
-    if (playerName === user_name) {
-      // If the current player is the drawing player, enable drawing
-      currentDrawer = user_name;
-      enableDrawing();
-    } else {
-      // Otherwise, disable drawing
-      currentDrawer = null;
-      disableDrawing();
-    }
-  });*/
-
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
 
@@ -228,4 +216,8 @@ socket.on("mouseUpServer",()=>{
 
     isDrawing = false
     
+})
+
+socket.on("colorChanged",(color)=>{
+    selectedColor = color;
 })
