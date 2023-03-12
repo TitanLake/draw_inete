@@ -78,7 +78,7 @@
         <div class="row buttons">
           <button class="clear-canvas">Clear Canvas</button>
           <button class="save-img">Save As Image</button>
-          <button class="save-img" style="background-color: rgb(34, 128, 49);color: black;">Start Game</button>
+          <button class="save-img" id="btnStart" style="background-color: rgb(34, 128, 49);color: black;">Start Game</button>
         </div>
       </section>
       <section class="drawing-board">
@@ -111,6 +111,7 @@ let socket_id = "";
 
 const messageTextArea = document.getElementById("messages")
 const btnSend = document.getElementById("sendMessage")
+const btnStart = document.getElementById("btnStart")
 const messageText = document.getElementById("messageBox")
 const tableBody = document.getElementById('playersTable')
 
@@ -160,7 +161,9 @@ function removePlayerRow(playerName) {
 
 socket.on('connect', (socketInfo) => {
   
-  
+  btnStart.addEventListener("click",()=>{
+    
+  })
   
   socket.emit('playerConnectedClient',
     {
