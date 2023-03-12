@@ -7,6 +7,8 @@ colorPicker = document.querySelector("#color-picker"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img")
 
+const drawingCointainer = document.querySelector(".container")
+
 if(canvas!=null)
 {
     ctx = canvas.getContext("2d");
