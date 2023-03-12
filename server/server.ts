@@ -99,6 +99,12 @@ io.on("connection",(socket:Socket)=>{
     socket.emit("clearCanvaServer")
   })
 
+  socket.on("colorChanged",(color)=>{
+
+    socket.broadcast.emit("colorChanged",color)
+
+  })
+
   socket.on("changeToolClient",(btnId)=>{
     
     socket.broadcast.emit("changeToolServer", btnId)
@@ -115,16 +121,10 @@ io.on("connection",(socket:Socket)=>{
 
     if(socketData.userName  != "")
     {
-
-     
-    
       users.push({
         userName:socketData.userName,
         socketId:socket.id
       })
-
-     
-      
     }
 
     io.emit("playerConnectedServer", users)
