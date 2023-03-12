@@ -184,7 +184,7 @@ io.on("connection",(socket:Socket)=>{
 
     console.log("users saida:");
     
-    io.emit("user_disconnect",user)
+    io.emit("playerDisconnectedServer",user)
 
     console.log(users)
 
