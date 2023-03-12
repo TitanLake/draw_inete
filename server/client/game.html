@@ -163,7 +163,7 @@ function removePlayerRow(playerName) {
 socket.on('connect', (socketInfo) => {
   
   
- socket.emit('playerConnectedClient',
+  socket.emit('playerConnectedClient',
     {
       socketId:socket.id,
       userName:localStorage.getItem('userName')
