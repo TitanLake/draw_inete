@@ -14,9 +14,7 @@
       <div class="form-label" style="font-size: 120%;">Enter your username 👨‍💼</div>
       <input type="text" class="form-control" style="margin:2%" id="SaveUserName">
       <div class="row buttons" style="align-items:center;justify-content: center;">
-        <a href="./game.html">
-          <button class="enter" id="enter" disabled>Enter</button>
-        </a>          
+        <button class="enter" id="enter" disabled>Enter</button>       
         <a href="./about.html">          
           <button class="info">i</button>  
         </a> 
@@ -24,16 +22,12 @@
     </div>
   </body>
 </html>
+
+<script src="./js/socketIO.js" ></script>
+
 <script>
-
-
-
-
-
-
-
-  (function()
-  {
+  const socket = io.connect('http://localhost:8080/');
+  
     var input = document.getElementById('SaveUserName');
     var button = document.getElementById('enter');              
     
@@ -43,19 +37,25 @@
     
     document.getElementById("enter").onclick = function () {   
       localStorage && (localStorage.setItem('userName', input.value));
+
       socket.emit('usernameCheck');
       socket.on("usernameCheckServer",(users)=>{
         let userExists = false;
         users.forEach(element => {
-          if(element.username==localStorage.getItem('userName'))
+
+     
+          if(element.userName===localStorage.getItem('userName'))
           {
             window.alert('ERROR, User already exists');
             userExists=true;
+            console.log("err")
           }
+          
           
         });
 
-        if(!userExists)
+        
+       if(!userExists)
         {
           location.href="./game.html";
         }
@@ -64,6 +64,6 @@
       
       console.log(localStorage.getItem('userName')+' joined the game');
     };
-  })();            
+           
 </script>
 
