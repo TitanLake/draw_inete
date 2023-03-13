@@ -266,6 +266,9 @@ io.on("connection",(socket:Socket)=>{
 
   })
 
+  socket.on("usernameCheck",()=>{
+    io.to(socket.id).emit("usernameCheckServer",users)
+  })
  
   socket.on("playerJoinedClient",(socketData:any)=>{
 
