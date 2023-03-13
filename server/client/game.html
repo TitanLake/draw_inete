@@ -165,7 +165,7 @@ socket.on('connect', (socketInfo) => {
     socket.emit("gameStartedClick");
   })
 
-  socket.on("gameStarted",()=>{
+  socket.on("gameStarted",(user)=>{
     
   })
 
@@ -180,11 +180,6 @@ socket.on('connect', (socketInfo) => {
 
   socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
-    
-    /*if(players.length>=2)
-    {
-      startGameBtn.disabled=false;
-    }*/
 
     for (let i = 0; i < tableBody.rows.length; i++) {
       tableBody.deleteRow(i);

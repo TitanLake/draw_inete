@@ -41,13 +41,29 @@
       button.disabled = input.value.length === 0;
     });
     
-
-    document.getElementById("enter").onclick = function () {                
+    document.getElementById("enter").onclick = function () {   
       localStorage && (localStorage.setItem('userName', input.value));
+      socket.emit('usernameCheck');
+      socket.on("usernameCheckServer",(users)=>{
+        let userExists = false;
+        users.forEach(element => {
+          if(element.username==localStorage.getItem('userName'))
+          {
+            window.alert('ERROR, User already exists');
+            userExists=true;
+          }
+          
+        });
 
+        if(!userExists)
+        {
+          location.href="./game.html";
+        }
+
+      })
+      
       console.log(localStorage.getItem('userName')+' joined the game');
     };
-
   })();            
 </script>
 
