@@ -120,19 +120,7 @@ socket.on('disconnect', () => {
   socket.emit('playerChanged');
 });
 
-btnStart.addEventListener("click", ()=>
-{  
-  if(btnStart.innerText == "Start Game")
-  {
-    btnStart.innerText = "End Turn"
-    btnStart.style.backgroundColor = "red"
-  }  
-  else
-  {
-    btnStart.innerText = "Start Game"
-    btnStart.style.backgroundColor = "green"   
-  }
-})
+
 
 btnSend.addEventListener("click",()=>{
 
@@ -174,11 +162,33 @@ function removePlayerRow(playerName) {
 
 socket.on('connect', (socketInfo) => {
   
-  btnStart.addEventListener("click", () => {
-    socket.emit("start_game", {
-      socket_id,
-      user_name,
-    });
+  btnStart.addEventListener("click", () =>
+   {
+
+    if(btnStart.innerText == "Start Game")
+    {
+      btnStart.innerText = "End Turn"
+      btnStart.style.backgroundColor = "red"
+
+      socket.emit("start_game", {
+        socket_id,
+        user_name,
+      });
+
+    }  
+    else
+    {
+      btnStart.innerText = "Start Game"
+      btnStart.style.backgroundColor = "green"
+      
+      socket.emit("end_turn", {
+        socket_id,
+        user_name,
+      });
+      
+    }
+
+    
   });
 
   socket.on("gameStarted",(user)=>{
