@@ -6,6 +6,7 @@ colorBtns = document.querySelectorAll(".colors .option"),
 colorPicker = document.querySelector("#color-picker"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img")
+const messageTextArea = document.getElementById("messages")
 
 let isDrawingAllowed = false;
 
@@ -71,11 +72,10 @@ const drawTriangle = (drawData) => {
     fillColor.checked ? ctx.fill() : ctx.stroke(); // if fillColor is checked fill triangle else draw border
 }
 
-
-socket.on("drawing_allowed", () => {
+socket.on("drawing_allowed", (word) => {
 
     console.log("allowed");
-
+    messageTextArea.innerHTML += `<p style="color: darkgreen;">« Word - ${word} </p>`;
     isDrawingAllowed = true;
 });
 
