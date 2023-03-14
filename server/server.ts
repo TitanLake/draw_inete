@@ -297,6 +297,12 @@ io.on("connection",(socket:Socket)=>{
     }
   });
 
+  socket.on("end_turn",()=>{
+
+    io.emit("turn_ended")
+
+  })
+
 
   socket.on("usernameCheck",()=>{
     io.to(socket.id).emit("usernameCheckServer",users)
