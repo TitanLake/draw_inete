@@ -251,7 +251,7 @@ io.on("connection",(socket:Socket)=>{
   socket.on("gameStartedClick",()=>{
     socket.broadcast.emit("gameStarted")
 
-    io.sockets.socket(socket.id).emit("generatedWord", words[5]);
+    //io.sockets.socket(socket.id).emit("generatedWord", words[5]);
 
   })
 
