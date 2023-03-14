@@ -192,41 +192,47 @@ io.on("connection",(socket:Socket)=>{
     
   })
 
-  socket.on("fillColorCheckedChanged",()=>{
-    socket.broadcast.emit("fillColorCheckedChanged")
-  })
+  if(socket.id === drawingPlayer)
+  {
 
-  socket.on("startDrawClient",(data)=>{
-    io.emit("startDrawServer", data)
-  })
+    socket.on("fillColorCheckedChanged",()=>{
+      socket.broadcast.emit("fillColorCheckedChanged")
+    })
 
-  socket.on("drawingClient",(data)=>{
-    io.emit("drawingServer",data)
-  })
-
-  socket.on("clearCanvaClient",()=>{
-
-    socket.broadcast.emit("clearCanvaServer")
-    socket.emit("clearCanvaServer")
-  })
-
-  socket.on("colorChanged",(color)=>{
-
-    socket.broadcast.emit("colorChanged",color)
-
-  })
-
-  socket.on("changeToolClient",(btnId)=>{
-    
-    socket.broadcast.emit("changeToolServer", btnId)
-    socket.emit("changeToolServer", btnId)
-  })
-
-  socket.on("mouseUpClient",()=>{
-
-    io.emit("mouseUpServer")
+    socket.on("startDrawClient",(data)=>{
+      io.emit("startDrawServer", data)
+    })
   
-  })
+    socket.on("drawingClient",(data)=>{
+      io.emit("drawingServer",data)
+    })
+  
+    socket.on("clearCanvaClient",()=>{
+  
+      socket.broadcast.emit("clearCanvaServer")
+      socket.emit("clearCanvaServer")
+    })
+  
+    socket.on("colorChanged",(color)=>{
+  
+      socket.broadcast.emit("colorChanged",color)
+  
+    })
+  
+    socket.on("changeToolClient",(btnId)=>{
+      
+      socket.broadcast.emit("changeToolServer", btnId)
+      socket.emit("changeToolServer", btnId)
+    })
+  
+    socket.on("mouseUpClient",()=>{
+  
+      io.emit("mouseUpServer")
+    
+    })
+
+  }
+  
 
   socket.on("playerConnectedClient",(socketData:any)=>{
 
@@ -296,6 +302,7 @@ io.on("connection",(socket:Socket)=>{
     }
   });
 
+
   socket.on("usernameCheck",()=>{
     io.to(socket.id).emit("usernameCheckServer",users)
   })
@@ -325,6 +332,13 @@ io.on("connection",(socket:Socket)=>{
       if(u.userName !== user?.userName)
         users2.push(u)
     })
+
+    if(drawingPlayer === socket.id)
+    {
+      drawingPlayer=""
+      io.emit("clearCanvaServer")
+
+    }
 
     users = users2
 
