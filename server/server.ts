@@ -192,48 +192,43 @@ io.on("connection",(socket:Socket)=>{
     
   })
 
-  if(socket.id === drawingPlayer)
-  {
+  socket.on("fillColorCheckedChanged",()=>{
+    socket.broadcast.emit("fillColorCheckedChanged")
+  })
 
-    socket.on("fillColorCheckedChanged",()=>{
-      socket.broadcast.emit("fillColorCheckedChanged")
-    })
+  socket.on("startDrawClient",(data)=>{
+    io.emit("startDrawServer", data)
+  })
 
-    socket.on("startDrawClient",(data)=>{
-      io.emit("startDrawServer", data)
-    })
-  
-    socket.on("drawingClient",(data)=>{
-      io.emit("drawingServer",data)
-    })
-  
-    socket.on("clearCanvaClient",()=>{
-  
-      socket.broadcast.emit("clearCanvaServer")
-      socket.emit("clearCanvaServer")
-    })
-  
-    socket.on("colorChanged",(color)=>{
-  
-      socket.broadcast.emit("colorChanged",color)
-  
-    })
-  
-    socket.on("changeToolClient",(btnId)=>{
-      
-      socket.broadcast.emit("changeToolServer", btnId)
-      socket.emit("changeToolServer", btnId)
-    })
-  
-    socket.on("mouseUpClient",()=>{
-  
-      io.emit("mouseUpServer")
+  socket.on("drawingClient",(data)=>{
+    io.emit("drawingServer",data)
+  })
+
+  socket.on("clearCanvaClient",()=>{
+
+    socket.broadcast.emit("clearCanvaServer")
+    socket.emit("clearCanvaServer")
+  })
+
+  socket.on("colorChanged",(color)=>{
+
+    socket.broadcast.emit("colorChanged",color)
+
+  })
+
+  socket.on("changeToolClient",(btnId)=>{
     
-    })
+    socket.broadcast.emit("changeToolServer", btnId)
+    socket.emit("changeToolServer", btnId)
+  })
 
-  }
+  socket.on("mouseUpClient",()=>{
+
+    io.emit("mouseUpServer")
   
+  })
 
+  
   socket.on("playerConnectedClient",(socketData:any)=>{
 
     if(socketData.userName  != "")
