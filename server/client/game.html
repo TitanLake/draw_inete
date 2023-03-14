@@ -112,7 +112,7 @@ const btnSend = document.getElementById("sendMessage")
 const btnStart = document.getElementById("btnStart")
 const messageText = document.getElementById("messageBox")
 const tableBody = document.getElementById('playersTable')
-
+let isDrawingAllowed = false;
 
 socket.on('disconnect', () => {
   socket.emit('playerChanged');

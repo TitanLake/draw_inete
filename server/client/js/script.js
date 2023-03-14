@@ -8,7 +8,7 @@ clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img")
 const messageTextArea = document.getElementById("messages")
 
-let isDrawingAllowed = false;
+
 
 
 if(canvas!=null)
