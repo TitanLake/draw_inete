@@ -120,11 +120,24 @@ socket.on('disconnect', () => {
   socket.emit('playerChanged');
 });
 
+btnStart.addEventListener("click", ()=>
+{  
+  if(btnStart.innerText == "Start Game")
+  {
+    btnStart.innerText = "End Turn"
+    btnStart.style.backgroundColor = "red"
+  }  
+  else
+  {
+    btnStart.innerText = "Start Game"
+    btnStart.style.backgroundColor = "green"   
+  }
+})
+
 btnSend.addEventListener("click",()=>{
 
   if(messageText.value == "")
     {
-
       alert("preencha a mensagem")
       return;
     }
