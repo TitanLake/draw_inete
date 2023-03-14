@@ -177,8 +177,10 @@ socket.on("clearCanvaServer",()=>{
 toolBtns.forEach(btn => {
     btn.addEventListener("click", () => { // adding click event to all tool option
         // removing active class from the previous option and adding on current clicked option
-        
-        socket.emit("changeToolClient",btn.id)
+        if(isDrawingAllowed)
+        {
+            socket.emit("changeToolClient",btn.id)
+        }
 
     });
 });
@@ -198,17 +200,20 @@ colorBtns.forEach(btn => {
 });
 
 colorPicker.addEventListener("change", () => {
+    if(isDrawingAllowed)
+    {
     // passing picked color value from color picker to last color btn background
     colorPicker.parentElement.style.background = colorPicker.value;
     colorPicker.parentElement.click();
+    }
 });
 
 clearCanvas.addEventListener("click", () => {
+    if(isDrawingAllowed)
+    {
     socket.emit("clearCanvaClient")
-
+    }
 });
-
-
 
 saveImg.addEventListener("click", () => {
     const link = document.createElement("a"); // creating <a> element
@@ -216,8 +221,6 @@ saveImg.addEventListener("click", () => {
     link.href = canvas.toDataURL(); // passing canvasData as link href value
     link.click(); // clicking link to download image
 });
-
-
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
@@ -230,9 +233,7 @@ canvas.addEventListener("mouseup", () => {
 });
 
 socket.on("mouseUpServer",()=>{
-
     isDrawing = false
-    
 })
 
 socket.on("colorChanged",(color)=>{
