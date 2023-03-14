@@ -267,10 +267,11 @@ io.on("connection",(socket:Socket)=>{
 
   })*/
 
-  socket.on("start_game", ({ socket_id, user_name }) => {
+  socket.on("start_game", ({ user_name }) => {
 
     // Only allow the first player who started the game to draw
     if (drawingPlayer === "") {
+
       drawingPlayer = socket.id;
 
       messages.push({
@@ -279,16 +280,21 @@ io.on("connection",(socket:Socket)=>{
       });
       io.emit("messages_load", messages) // emit load messages to only user
     
+      io.emit("game_started", { 
+        userName:user_name,
+        
+      });
 
-      io.emit("game_started", { user_name });
-      io.to(drawingPlayer).emit("drawing_allowed");
+      const randomIndex = Math.floor(Math.random() * words.length);
+
+      // select the string at the random index
+      const randomWord = words[randomIndex];
+
+      io.to(drawingPlayer).emit("drawing_allowed",{
+        word:randomWord
+      });
     }
   });
-
-
-
-
-
 
   socket.on("usernameCheck",()=>{
     io.to(socket.id).emit("usernameCheckServer",users)
@@ -304,19 +310,14 @@ io.on("connection",(socket:Socket)=>{
       })
     }
 
-
     io.emit("playerJoinedServer", users)
 
-
   })
-
 
 
   socket.on("disconnect",(socketData)=>{
    
     const user = users.find(u => u.socketId == socket.id)
-
-    
 
     let users2:IUser[] = []
 
@@ -326,7 +327,6 @@ io.on("connection",(socket:Socket)=>{
     })
 
     users = users2
-
 
     console.log("users saida:");
     

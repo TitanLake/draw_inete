@@ -162,11 +162,11 @@ function removePlayerRow(playerName) {
 socket.on('connect', (socketInfo) => {
   
   btnStart.addEventListener("click", () => {
-  socket.emit("start_game", {
-    socket_id,
-    user_name,
+    socket.emit("start_game", {
+      socket_id,
+      user_name,
+    });
   });
-});
 
   socket.on("gameStarted",(user)=>{
     
