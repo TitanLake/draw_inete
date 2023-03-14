@@ -7,6 +7,9 @@ colorPicker = document.querySelector("#color-picker"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img")
 
+let isDrawingAllowed = false;
+
+
 if(canvas!=null)
 {
     ctx = canvas.getContext("2d");
@@ -68,8 +71,17 @@ const drawTriangle = (drawData) => {
     fillColor.checked ? ctx.fill() : ctx.stroke(); // if fillColor is checked fill triangle else draw border
 }
 
+
+socket.on("drawing_allowed", () => {
+
+    console.log("allowed");
+
+    isDrawingAllowed = true;
+});
+
 const startDraw = (e) => {
 
+    console.log(isDrawingAllowed)
     if (isDrawingAllowed) {
         // Drawing logic
         socket.emit("startDrawClient",{
@@ -106,16 +118,17 @@ socket.on("startDrawServer",(socketData)=>{
 })
 
 const drawing = (e) => {
-    
-    
 
-    socket.emit("drawingClient", {
-        posX:e.offsetX, posY:e.offsetY
-        ,
-        canva:e,
-        offsetY:e.offsetY,
-        offsetX:e.offsetX
-    })
+    if (isDrawingAllowed){
+        socket.emit("drawingClient", {
+            posX:e.offsetX, posY:e.offsetY
+            ,
+            canva:e,
+            offsetY:e.offsetY,
+            offsetX:e.offsetX
+        })
+    }
+    
     
 }
 
@@ -210,7 +223,10 @@ canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
 
 canvas.addEventListener("mouseup", () => {
-   socket.emit("mouseUpClient") 
+   if(isDrawingAllowed)
+    {
+        socket.emit("mouseUpClient") 
+    }
 });
 
 socket.on("mouseUpServer",()=>{
@@ -220,5 +236,8 @@ socket.on("mouseUpServer",()=>{
 })
 
 socket.on("colorChanged",(color)=>{
-    selectedColor = color;
+    if(isDrawingAllowed){
+        selectedColor = color;
+    }
+   
 })

@@ -268,24 +268,26 @@ io.on("connection",(socket:Socket)=>{
   })*/
 
   socket.on("start_game", ({ socket_id, user_name }) => {
+
     // Only allow the first player who started the game to draw
-    if (drawingPlayer === null) {
-      drawingPlayer = socket_id;
+    if (drawingPlayer === "") {
+      drawingPlayer = socket.id;
+
+      messages.push({
+        username: "GOD JC BOT",
+        message: `${user_name} started the game. Only they can draw.`,
+      });
+      io.emit("messages_load", messages) // emit load messages to only user
+    
+
       io.emit("game_started", { user_name });
+      io.to(drawingPlayer).emit("drawing_allowed");
     }
   });
 
 
 
-socket.on("game_started", ({ user_name }) => {
-  // Add a message to the chat indicating that the game has started
-  io.emit("message_received", {
-    user_name: "SYSTEM",
-    message: `${user_name} started the game. Only they can draw.`,
-  });
-  // Send a message to the drawing player indicating that they can start drawing
-  io.to(drawingPlayer).emit("drawing_allowed");
-});
+
 
 
   socket.on("usernameCheck",()=>{
