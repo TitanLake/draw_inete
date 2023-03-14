@@ -106,7 +106,7 @@
 const socket = io.connect('http://localhost:8080/');
 const user_name = localStorage.getItem('userName');
 let socket_id = "";
-
+let isDrawingAllowed = false;
 
 
 const messageTextArea = document.getElementById("messages")
@@ -161,14 +161,20 @@ function removePlayerRow(playerName) {
 
 socket.on('connect', (socketInfo) => {
   
-  btnStart.addEventListener("click",()=>{
-    socket.emit("gameStartedClick");
-  })
+  btnStart.addEventListener("click", () => {
+  socket.emit("start_game", {
+    socket_id,
+    user_name,
+  });
+});
 
   socket.on("gameStarted",(user)=>{
     
   })
 
+  socket.on("drawing_allowed", () => {
+  isDrawingAllowed = true;
+});
 
   socket.emit('playerConnectedClient',
     {

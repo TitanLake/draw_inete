@@ -170,6 +170,7 @@ let words = [
 let users:IUser[] = []
 const messages: IMessage[] = [] 
 let generatedWord = ""
+let drawingPlayer = '';
 
 io.on("connection",(socket:Socket)=>{
 
@@ -248,7 +249,7 @@ io.on("connection",(socket:Socket)=>{
 
   // game started
 
-  socket.on("gameStartedClick",()=>{
+  /*socket.on("gameStartedClick",()=>{
     socket.broadcast.emit("gameStarted")
 
     //io.sockets.socket(socket.id).emit("generatedWord", words[5]);
@@ -264,7 +265,28 @@ io.on("connection",(socket:Socket)=>{
 
     }
 
-  })
+  })*/
+
+  socket.on("start_game", ({ socket_id, user_name }) => {
+    // Only allow the first player who started the game to draw
+    if (drawingPlayer === null) {
+      drawingPlayer = socket_id;
+      io.emit("game_started", { user_name });
+    }
+  });
+
+
+
+socket.on("game_started", ({ user_name }) => {
+  // Add a message to the chat indicating that the game has started
+  io.emit("message_received", {
+    user_name: "SYSTEM",
+    message: `${user_name} started the game. Only they can draw.`,
+  });
+  // Send a message to the drawing player indicating that they can start drawing
+  io.to(drawingPlayer).emit("drawing_allowed");
+});
+
 
   socket.on("usernameCheck",()=>{
     io.to(socket.id).emit("usernameCheckServer",users)

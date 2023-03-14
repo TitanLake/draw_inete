@@ -69,13 +69,17 @@ const drawTriangle = (drawData) => {
 }
 
 const startDraw = (e) => {
-    socket.emit("startDrawClient",{
-        posX:e.offsetX,
-        posY:e.offsetY,
-        brushWidth,
-        selectedColor,
-        canva:e
-    })
+
+    if (isDrawingAllowed) {
+        // Drawing logic
+        socket.emit("startDrawClient",{
+            posX:e.offsetX,
+            posY:e.offsetY,
+            brushWidth,
+            selectedColor,
+            canva:e
+        })
+      }
 }
 
 socket.on("fillColorCheckedChanged",()=>{
@@ -201,9 +205,6 @@ saveImg.addEventListener("click", () => {
 });
 
 
-socket.on("startDraw",()=>{
-
-})
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
