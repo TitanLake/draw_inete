@@ -48,7 +48,7 @@
           {
             window.alert('ERROR, User already exists');
             userExists=true;
-            console.log("err")
+            console.log("error, user already exists")
           }
           
           
@@ -57,6 +57,7 @@
         
        if(!userExists)
         {
+          console.log("login succesful")
           location.href="./game.html";
         }
 
