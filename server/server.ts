@@ -41,13 +41,13 @@ interface IUser{
 }
 
 let words = [
-  "base de dados",
-  "computador",
-  "teclado",
-  "inteligencia artificial",
-  "microsoft",
-  "google",
-  "android",
+  "Base de dados",
+  "Computador",
+  "Teclado",
+  "Inteligencia artificial",
+  "Microsoft",
+  "Google",
+  "Android",
   "Computador gamer",
   "Câmera de segurança",
   "Smartphone",
