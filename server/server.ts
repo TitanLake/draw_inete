@@ -81,7 +81,7 @@ let words = [
   "Scanner",
   "Roteador Wi-Fi",
   "Câmera fotográfica",
-  "Smart home",
+  "Casa",
   "Caixa de ferramentas",
   "Bicicleta elétrica",
   "Mochila anti-furto",
@@ -95,7 +95,7 @@ let words = [
   "Piano",
   "Maquilhagem",
   "Relógio de pulso",
-  "Auriculares bluetooth",
+  "Fones bluetooth",
   "Lâmpada",
   "Carregador wireless",
   "USB",
@@ -306,7 +306,7 @@ io.on("connection",(socket:Socket)=>{
 
       messages.push({
         username: "JC BOT",
-        message: `${user_name} started the game. Only they can draw.`,
+        message: `${user_name} started the game. Guess the drawing!.`,
       });
       io.emit("messages_load", messages) // emit load messages to only user
     
