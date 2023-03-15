@@ -10,6 +10,8 @@ let messageTextArea2 = document.getElementById("messages")
 
 let isDrawingAllowed = false;
 
+document.title = "Draw INETE";
+
 if(canvas!=null)
 {
     ctx = canvas.getContext("2d");
@@ -246,6 +248,20 @@ canvas.addEventListener("mouseup", () => {
     }
 });
 
+// Desabilita o botão direito do mouse
+document.addEventListener("contextmenu", function(e){
+    window.alert('Cant do that hehe')
+    e.preventDefault();
+}, false);
+
+// Desabilita a tecla F12
+document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 123) {
+        window.alert('Cant do that hehe')
+        e.preventDefault();
+    }
+}, false);
+
 socket.on("mouseUpServer",()=>{
     isDrawing = false
 })
@@ -256,3 +272,5 @@ socket.on("colorChanged",(color)=>{
     }
    
 })
+
+
