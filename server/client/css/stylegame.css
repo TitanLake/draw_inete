@@ -150,22 +150,22 @@ section{
 
 .players{
   display: block; margin: 0 auto;text-align: center;
+  width: 10%;
 }
-
 
 .container{
   width: 80%;
 }
 
-.players table{
-  width: 100%;
-}
+
 .block div{
   flex:1;
   
 }
 
-
+.players table{
+  width: 100%;
+}
 
 @media screen and (max-width: 768px){
  
