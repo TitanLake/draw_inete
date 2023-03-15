@@ -197,7 +197,7 @@ io.on("connection",(socket:Socket)=>{
         user.score  = word.length;
         messages.push({
           username: "JC BOT",
-          message: `NICE🎉${user.userName}! - ${user.score} points`,
+          message: `NICE${user.userName}!🎉 - ${user.score} points`,
         });
          //bloquear o chat?
       }
