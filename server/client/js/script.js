@@ -11,6 +11,9 @@ let messageTextArea2 = document.getElementById("messages")
 let isDrawingAllowed = false;
 
 
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+
 if(canvas!=null)
 {
     ctx = canvas.getContext("2d");
