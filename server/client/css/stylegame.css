@@ -151,6 +151,8 @@ section{
 .drawing-board canvas{
   width: 500px;
   height: 500px;
+  max-width: 500px;
+  max-height: 500px;
 }
 
 
@@ -175,11 +177,15 @@ main{
   .drawing-board{
     height: 500px;
     width: 500px;
+    max-width: 500px;
+    max-height: 500px;
   }
 
   .drawing-board canvas{
     width: 500px;
     height: 500px;
+    max-width: 500px;
+    max-height: 500px;
   }
 
   /*.drawing-board{
