@@ -37,7 +37,8 @@ interface ISocketToUserWithMessage extends ISocketToUser
 
 interface IUser{
   socketId:string,
-  userName :string
+  userName :string,
+  score: number;
 }
 
 let words = [
@@ -96,13 +97,12 @@ let words = [
   "Relógio de pulso",
   "Auriculares bluetooth",
   "Lâmpada",
-  "Mini projetor",
   "Carregador wireless",
   "USB",
   "Kit de ferramentas para celular",
   "Balança digital",
   "Powerbank",
-  "Lâmina de barbear elétrica",
+  "Gilete",
   "Purificador de ar",
   "Câmera",
   "Colchão",
@@ -123,8 +123,7 @@ let words = [
   "Torradeira",
   "Aspirador de pó robô",
   "Churrasqueira elétrica",
-  "Processador de alimentos",
-  "Geladeira",
+  "Frigorífico",
   "Elefante",
   "Girafa",
   "Leão",
@@ -214,13 +213,16 @@ io.on("connection",(socket:Socket)=>{
   })
 
   
+
+
   socket.on("playerConnectedClient",(socketData:any)=>{
 
     if(socketData.userName  != "")
     {
       users.push({
         userName:socketData.userName,
-        socketId:socket.id
+        socketId:socket.id,
+        score:0
       })
     }
 
@@ -232,6 +234,20 @@ io.on("connection",(socket:Socket)=>{
 
   })
 
+
+  socket.on("correct_word_sent", (socketInfo: ISocketToUserWithMessage) => {
+    const user = users.find(u => u.socketId === socket.id);
+    if (user) {
+      io.emit("messages_load", messages) // emit load messages to only user
+      user.score += 1;
+      //falta fazer a parte do client
+      io.emit("points_updated", users);
+      messages.push({
+        username: "JC BOT",
+        message: `${user.userName} - ${user.score} points`,
+      });
+    }
+  });
 
   // game started
 
@@ -311,7 +327,8 @@ io.on("connection",(socket:Socket)=>{
     {
       users.push({
         userName:socketData.userName,
-        socketId:socket.id
+        socketId:socket.id,
+        score:0
       })
     }
 
