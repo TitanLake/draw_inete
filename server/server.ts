@@ -158,20 +158,18 @@ let drawingPlayer = '';
 
 io.on("connection",(socket:Socket)=>{
 
-  // adiciona um usuário com pontuação 0
+  // adiciona um utilizador com pontuação 0
     function addUser(username: string) {
     users.push({ socketId:socket.id, userName:username,  score: 0 });
     }
 
-    // incrementa a pontuação do usuário com o nome de usuário especificado
+    // incrementa a pontuação do utilizador com o nome de utilizador especificado
   function addPoints(username: string, points: number) {
   const user = users.find((u) => u.userName === username);
   if (user) {
     user.score += points;
   }
   }
-
-
 
 
   
@@ -193,31 +191,23 @@ io.on("connection",(socket:Socket)=>{
     if(socketInfo.message.includes(word))
     {
       
-
-      = word.length;
-
-
-      //bloquear o chat?
+      const user = users.find((u) => u.userName === socketInfo.user_name);
+      if(user)
+      {
+        user.score  = word.length;
+        messages.push({
+          username: "JC BOT",
+          message: `BINGO ${user.userName}! - ${user.score} points`,
+        });
+         //mandar msg palavra correta?
+         //bloquear o chat?
+      }
     }
     else
     {
       //mandar msg palavra incorreta?
     }
   })
-
-  socket.on("correct_word_sent", (socketInfo: ISocketToUserWithMessage) => {
-    const user = users.find(u => u.socketId === socket.id);
-    if (user) {
-      io.emit("messages_load", messages) // emit load messages to only user
-      user.score += 1;
-      //falta fazer a parte do client
-      io.emit("points_updated", users);
-      messages.push({
-        username: "JC BOT",
-        message: `${user.userName} - ${user.score} points`,
-      });
-    }
-  });
 
   socket.on("fillColorCheckedChanged",()=>{
     socket.broadcast.emit("fillColorCheckedChanged")
