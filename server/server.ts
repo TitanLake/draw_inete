@@ -158,6 +158,7 @@ let drawingPlayer = '';
 
 io.on("connection",(socket:Socket)=>{
 
+  const userScores: IUser[] = [];
 
   socket.on("load_messages", async function(socketInfo: ISocketToUser){
     
@@ -171,10 +172,38 @@ io.on("connection",(socket:Socket)=>{
       message:socketInfo.message,
       username:socketInfo.user_name
     })
-   
+   let word = socketInfo.message;
     io.emit("message_received")
     
+
+
+
+    if(socketInfo.message.includes(word))
+    {
+       = word.length;
+
+
+      //bloquear o chat?
+    }
+    else
+    {
+      //mandar msg palavra incorreta?
+    }
   })
+
+  socket.on("correct_word_sent", (socketInfo: ISocketToUserWithMessage) => {
+    const user = users.find(u => u.socketId === socket.id);
+    if (user) {
+      io.emit("messages_load", messages) // emit load messages to only user
+      user.score += 1;
+      //falta fazer a parte do client
+      io.emit("points_updated", users);
+      messages.push({
+        username: "JC BOT",
+        message: `${user.userName} - ${user.score} points`,
+      });
+    }
+  });
 
   socket.on("fillColorCheckedChanged",()=>{
     socket.broadcast.emit("fillColorCheckedChanged")
@@ -229,45 +258,12 @@ io.on("connection",(socket:Socket)=>{
     io.emit("playerConnectedServer", users)
 
     console.log("logged users:");
-    
     console.log(users)
 
   })
 
 
-  socket.on("correct_word_sent", (socketInfo: ISocketToUserWithMessage) => {
-    const user = users.find(u => u.socketId === socket.id);
-    if (user) {
-      io.emit("messages_load", messages) // emit load messages to only user
-      user.score += 1;
-      //falta fazer a parte do client
-      io.emit("points_updated", users);
-      messages.push({
-        username: "JC BOT",
-        message: `${user.userName} - ${user.score} points`,
-      });
-    }
-  });
 
-  // game started
-
-  /*socket.on("gameStartedClick",()=>{
-    socket.broadcast.emit("gameStarted")
-
-    //io.sockets.socket(socket.id).emit("generatedWord", words[5]);
-
-  })
-
-  socket.on("gameStarted",(socketData)=>{
-
-    if(generatedWord == ""){
-      generatedWord = words[5]
-
-      io.emit("generatedWord", generatedWord)
-
-    }
-
-  })*/
 
   socket.on("start_game", ({ user_name }) => {
 

@@ -132,7 +132,7 @@ btnSend.addEventListener("click",()=>{
 
   if(messageText.value == "")
     {
-      alert("preencha a mensagem")
+      alert("Complete the message")
       return;
     }
     else
@@ -143,24 +143,6 @@ btnSend.addEventListener("click",()=>{
       message:messageText.value,
           
       })
-
-      //pedir a palavra??
-      const word = "";
-
-      //pedir o score??
-      let score = 0;
-
-      if(messageText.value.includes(word))
-      {
-        score = word.length;
-        //bloquear o chat?
-      }
-      else
-      {
-        //mandar msg palavra incorreta?
-      }
-
-      messageText.value = ""
     }
 
 })
