@@ -297,6 +297,8 @@ socket.on("messages_load",(messages)=>{
     else{
       messageTextArea.innerHTML += `<p>«<i style="color:blue;">${element.username}</i>» - ${element.message} </p>`
     }
+
+    messageTextArea.innerHTML += "<br/>"
   });
   messageTextArea.scrollTop = messageTextArea.scrollHeight;
 })
