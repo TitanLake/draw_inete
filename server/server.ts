@@ -53,8 +53,7 @@ let words = [
   "Câmera",
   "Barbeador elétrico",
   "Relógio inteligente",
-  "Caixa de som portátil",
-  "Smart tag",
+  "Coluna",
   "Serra elétrica",
   "Aquecedor portátil",
   "Ventilador de mesa",
@@ -81,6 +80,7 @@ let words = [
   "Tubarão",
   "Golfinho",
   "Baleia",
+  "Carregador",
   "Caranguejo",
   "Polvo",
   "Esquilo",
@@ -89,7 +89,7 @@ let words = [
   "Camelo",
   "Canguru",
   "Pinguim",
-  "Computador gamer",
+  "Computador gaming",
   "Câmara de segurança",
   "Smartphone",
   "Cafeteira",
@@ -198,6 +198,8 @@ function clearTurn(){
 
 }
 
+
+
 io.on("connection",(socket:Socket)=>{
 
 
@@ -207,8 +209,12 @@ io.on("connection",(socket:Socket)=>{
     if (user) {
       user.score += points;
     }
-  }
 
+    io.emit("pointsAdded", {
+      users
+    })
+
+  }
 
   
   socket.on("load_messages", async function(socketInfo: ISocketToUser){
@@ -220,7 +226,7 @@ io.on("connection",(socket:Socket)=>{
   socket.on("message_sent", async function(socketInfo: ISocketToUserWithMessage){
 
   
-    //if(drawingPlayer !== "" && generaTedWord !== "") // game is running
+    if(drawingPlayer !== "" && generaTedWord !== "") // game is running
     {
       if(generaTedWord.toLowerCase().trim().includes(socketInfo.message.toLowerCase().trim()) && socketInfo.message.length > 2)
       {
@@ -237,19 +243,19 @@ io.on("connection",(socket:Socket)=>{
 
           messages.push({
             username: "JC BOT",
-            message: `Drawer ${user.userName}!🎉 - ${user.score} points`,
+            message: `Nice ${user.userName}!🎉 - ${user.score} points`,
           });
 
           messages.push({
             username: "JC BOT",
-            message: `Drawer - ${user.score} points`,
+            message: `Nice ${users.find(u=>u.socketId === drawingPlayer)?.userName && "Drawer"} - ${user.score} points`,
           });
 
           io.emit("message_received")
 
           
           io.to(socket.id).emit("closeChat")
-          io.to(drawingPlayer).emit("closeChat")
+          
           //bloquear o chat?
         }
       }
@@ -340,7 +346,7 @@ io.on("connection",(socket:Socket)=>{
     if (drawingPlayer === "") {
       console.log('game Started');
       drawingPlayer = socket.id;
-
+      io.to(drawingPlayer).emit("closeChat")
       messages.push({
         username: "JC BOT",
         message: `${user_name} started the game. Guess the drawing!.`,
