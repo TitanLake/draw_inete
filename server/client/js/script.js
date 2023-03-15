@@ -103,7 +103,9 @@ const startDraw = (e) => {
 }
 
 socket.on("fillColorCheckedChanged",()=>{
+    if (isDrawingAllowed) {
     fillColor.checked = !fillColor.checked
+    }
 })
 
 socket.on("startDrawServer",(socketData)=>{
