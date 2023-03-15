@@ -178,7 +178,7 @@ let words = [
 ]
 
 let users:IUser[] = []
-const messages: IMessage[] = [] 
+let messages: IMessage[] = [] 
 let drawingPlayer = '';
 let generaTedWord = ""
 
@@ -270,7 +270,29 @@ io.on("connection",(socket:Socket)=>{
             io.emit("message_received")
       }
 
-        return
+      return
+    }
+
+    if(socketInfo.message.toLowerCase().trim() === "reset"){
+      messages = []
+      let users2:IUser[] = []
+
+      users.map((u)=>{
+        users2.push({...u, score:0})
+      })
+
+      users = users2
+
+      messages.push({
+        username: "JC BOT",
+        message: `GAME RESETED 😢`,
+      });
+
+      io.emit("message_received")
+      io.emit("playerConnectedServer", users)
+      clearTurn()
+
+      return
     }
 
     messages.push({
@@ -338,8 +360,6 @@ io.on("connection",(socket:Socket)=>{
   })
 
 
-
-
   socket.on("start_game", ({ user_name }) => {
 
     // Only allow the first player who started the game to draw
@@ -351,6 +371,7 @@ io.on("connection",(socket:Socket)=>{
         username: "JC BOT",
         message: `${user_name} started the game. Guess the drawing!.`,
       });
+
       io.emit("messages_load", messages) // emit load messages to only user
     
       socket.broadcast.emit("game_started", { 
