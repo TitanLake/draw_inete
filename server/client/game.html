@@ -26,9 +26,12 @@
     <div class="container">
       <section class="tools-board">
         <div class="row">
+          <label id="word" class="title" style="font-size: 20px; display:none;" ></label>
           <label class="title" style="font-size: larger; color: chartreuse;">Draw INETE</label><br>
           <label class="title">Shapes</label>
+          
           <ul class="options">
+            
             <li class="option tool" id="rectangle">
               <img src="icons/rectangle.svg" alt="">
               <span>Rectangle</span>
@@ -83,7 +86,7 @@
       </section>
       <section class="drawing-board">
         <canvas id="canva">
-
+            
         </canvas>
       </section>
     </div>
@@ -112,17 +115,17 @@ const btnSend = document.getElementById("sendMessage")
 const btnStart = document.getElementById("btnStart")
 const messageText = document.getElementById("messageBox")
 const tableBody = document.getElementById('playersTable')
-let gameStarted
+let gameStarted = false
 
-if(localStorage.getItem("gameStarted") === null)
-gameStarted = false
+
+if(localStorage.getItem("btnDisbled") == "true"){
+  btnStart.disabled = true;
+}
 
 
 socket.on('disconnect', () => {
   socket.emit('playerChanged');
 });
-
-
 
 
 btnSend.addEventListener("click",()=>{
@@ -168,10 +171,10 @@ socket.on('connect', (socketInfo) => {
   socket.on("game_started",(data)=>{
     console.log("game started")
    
-    
     if(socket.id !== data.socketId)
     {
       btnStart.disabled=true;
+      localStorage.setItem("btnDisbled","true")
     }
 
   })
@@ -179,9 +182,11 @@ socket.on('connect', (socketInfo) => {
   socket.on("ended_turn",()=>{
     console.log("game ended")
     
-
+    localStorage.setItem("btnDisbled","false")
     btnStart.disabled = false;
   })
+
+  
 
   btnStart.addEventListener("click", () =>
    {
@@ -198,7 +203,7 @@ socket.on('connect', (socketInfo) => {
         });
 
         gameStarted = true
-
+        localStorage.getItem("btnDisbled","false")
       }
       else
       {
@@ -289,7 +294,12 @@ socket.on('connect', (socketInfo) => {
     messageTextArea.innerHTML = ""
     messages.forEach(element => {
      
-      messageTextArea.innerHTML += `<p>«${element.username}» - ${element.message} </p>`
+      if(element.username === "JC BOT"){
+        messageTextArea.innerHTML += `<p>«<i style="color:red;">${element.username}</i>» - ${element.message} </p>`
+      }
+      else{
+        messageTextArea.innerHTML += `<p>«<i style="color:blue;">${element.username}</i>» - ${element.message} </p>`
+      }
     
     });
 

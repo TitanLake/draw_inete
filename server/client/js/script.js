@@ -27,7 +27,10 @@ selectedColor = "#000";
 
 const fillColorCheckedChanged = ()=>{
 
-    socket.emit("fillColorCheckedChanged")
+    if(isDrawingAllowed)
+    {
+        socket.emit("fillColorCheckedChanged")
+    }    
 }
 
 
@@ -80,7 +83,15 @@ socket.on("drawing_allowed", (word) => {
     console.log("allowed");
     messageTextArea2.innerHTML += `<p style="color: darkgreen;">«JC BOT» - ${word.word} </p>`;
     isDrawingAllowed = true;
+
+    document.getElementById("word").style.display = "block"
+    document.getElementById("word").innerText = "Word: " + word.word
 });
+
+socket.on("user_ended_turn", ()=>{
+    isDrawingAllowed = false;
+    document.getElementById("word").style.display = "none"
+})
 
 const startDraw = (e) => {
 
@@ -193,12 +204,14 @@ sizeSlider.addEventListener("change", () => brushWidth = sizeSlider.value); // p
 colorBtns.forEach(btn => {
     btn.addEventListener("click", () => { // adding click event to all color button
         // removing selected class from the previous option and adding on current clicked option
-
-        document.querySelector(".options .selected").classList.remove("selected");
-        btn.classList.add("selected");
-        // passing selected btn background color as selectedColor value
-        selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
-        socket.emit('colorChanged',selectedColor);
+        if(isDrawingAllowed)
+        {
+            document.querySelector(".options .selected").classList.remove("selected");
+            btn.classList.add("selected");
+            // passing selected btn background color as selectedColor value
+            selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
+            socket.emit('colorChanged',selectedColor);
+        }        
     });
 });
 
