@@ -288,40 +288,20 @@ socket.on('connect', (socketInfo) => {
     })
   })
 
-  socket.on("messages_load",(messages)=>{
-
-    console.log(messages);
-    messageTextArea.innerHTML = ""
-    messages.forEach(element => {
-     
-      if(element.username === "JC BOT"){
-        messageTextArea.innerHTML += `<p>«<i style="color:red;">${element.username}</i>» - ${element.message} </p>`
-      }
-      else{
-        messageTextArea.innerHTML += `<p>«<i style="color:blue;">${element.username}</i>» - ${element.message} </p>`
-      }
-    
-    });
-
-   
-  })
-  
-  
-
+socket.on("messages_load",(messages)=>{
+  console.log(messages);
+  messageTextArea.innerHTML = ""
+  messages.forEach(element => {
+    if(element.username === "JC BOT"){
+      messageTextArea.innerHTML += `<p>«<i style="color:red;">${element.username}</i>» - ${element.message} </p>`
+    }
+    else{
+      messageTextArea.innerHTML += `<p>«<i style="color:blue;">${element.username}</i>» - ${element.message} </p>`
+    }
+  });
+  messageTextArea.scrollTop = messageTextArea.scrollHeight;
+})
 });
-
-/*function enableDrawing() {
-  canvas.addEventListener('mousedown', startDrawing);
-  canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mouseup', stopDrawing);
-}
-
-function disableDrawing() {
-  canvas.removeEventListener('mousedown', startDrawing);
-  canvas.removeEventListener('mousemove', draw);
-  canvas.removeEventListener('mouseup', stopDrawing);
-}
-*/
 
 </script>
 
