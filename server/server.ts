@@ -308,6 +308,7 @@ io.on("connection",(socket:Socket)=>{
 
     io.emit("messages_load", messages)
 
+    io.emit("clearCanvaServer")
     io.emit("ended_turn")
 
   })
@@ -347,7 +348,7 @@ io.on("connection",(socket:Socket)=>{
     {
       drawingPlayer=""
       io.emit("clearCanvaServer")
-
+      io.emit("ended_turn")
     }
 
     users = users2
