@@ -185,7 +185,15 @@ socket.on('connect', (socketInfo) => {
     btnStart.disabled = false;
   })
 
-  
+  socket.on("closeChat",()=>{
+    messageText.readOnly = true;
+    btnSend.disabled = true;
+  })
+
+  socket.on("openChat",()=>{
+    messageText.readOnly = false;
+    btnSend.disabled = false;
+  })
 
   btnStart.addEventListener("click", () =>
    {
@@ -248,7 +256,6 @@ socket.on('connect', (socketInfo) => {
     const tableBody = document.getElementById('playersTable');
 
     
-
     players.forEach(element => {
       console.log(element.userName+' removido da tabela')
       removePlayerRow(element.userName);

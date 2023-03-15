@@ -158,7 +158,7 @@ let generaTedWord = ""
 
 function clearTurn(){
   drawingPlayer = ""
-
+  generaTedWord = ""
     messages.push({
       username: "JC BOT",
       message: `ended turn`,
@@ -194,9 +194,9 @@ io.on("connection",(socket:Socket)=>{
   socket.on("message_sent", async function(socketInfo: ISocketToUserWithMessage){
 
   
-    if(drawingPlayer !== "" && generaTedWord) // game is running
+    //if(drawingPlayer !== "" && generaTedWord !== "") // game is running
     {
-      if(generaTedWord.includes(socketInfo.message))
+      if(generaTedWord.toLowerCase().trim().includes(socketInfo.message.toLowerCase().trim()) && socketInfo.message.length > 2)
       {
         
         const user = users.find((u) => u.userName === socketInfo.user_name);
@@ -210,7 +210,7 @@ io.on("connection",(socket:Socket)=>{
             username: "JC BOT",
             message: `NICE ${user.userName}!🎉 - ${user.score} points`,
           });
-
+          io.emit("message_received")
           io.to(socket.id).emit("closeChat")
 
           //bloquear o chat?
@@ -222,8 +222,10 @@ io.on("connection",(socket:Socket)=>{
           messages.push({
               username: "JC BOT",
               message: `WRONG 😢`,
-            });
-        }
+          });
+
+            io.emit("message_received")
+      }
 
         return
     }
@@ -357,7 +359,11 @@ io.on("connection",(socket:Socket)=>{
 
   socket.on("disconnect",(socketData)=>{
    
-    const user = users.find(u => u.socketId == socket.id)
+    let user = users.find(u => u.socketId == socket.id)
+    
+    if(user){
+      user = {...user,score:0}
+    }
 
     let users2:IUser[] = []
 

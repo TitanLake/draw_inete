@@ -26,7 +26,9 @@ const fillColorCheckedChanged = ()=>{
     if(isDrawingAllowed)
     {
         socket.emit("fillColorCheckedChanged")
-    }    
+    } else{
+        fillColor.checked = !fillColor.checked
+    }   
 }
 fillColor.addEventListener("click",fillColorCheckedChanged);
 
@@ -104,7 +106,7 @@ const startDraw = (e) => {
 
 socket.on("fillColorCheckedChanged",()=>{
     if (isDrawingAllowed) {
-    fillColor.checked = !fillColor.checked
+        fillColor.checked = !fillColor.checked
     }
 })
 
