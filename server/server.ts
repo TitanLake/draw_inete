@@ -197,15 +197,18 @@ io.on("connection",(socket:Socket)=>{
         user.score  = word.length;
         messages.push({
           username: "JC BOT",
-          message: `BINGO ${user.userName}! - ${user.score} points`,
+          message: `NICE🎉${user.userName}! - ${user.score} points`,
         });
-         //mandar msg palavra correta?
          //bloquear o chat?
       }
     }
     else
     {
-      //mandar msg palavra incorreta?
+      //mandar msg palavra incorreta
+      messages.push({
+        username: "JC BOT",
+        message: `WRONG 😢`,
+      });
     }
   })
 
