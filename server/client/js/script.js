@@ -27,7 +27,10 @@ selectedColor = "#000";
 
 const fillColorCheckedChanged = ()=>{
 
-    socket.emit("fillColorCheckedChanged")
+    if(isDrawingAllowed)
+    {
+        socket.emit("fillColorCheckedChanged")
+    }    
 }
 
 
@@ -193,12 +196,14 @@ sizeSlider.addEventListener("change", () => brushWidth = sizeSlider.value); // p
 colorBtns.forEach(btn => {
     btn.addEventListener("click", () => { // adding click event to all color button
         // removing selected class from the previous option and adding on current clicked option
-
-        document.querySelector(".options .selected").classList.remove("selected");
-        btn.classList.add("selected");
-        // passing selected btn background color as selectedColor value
-        selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
-        socket.emit('colorChanged',selectedColor);
+        if(isDrawingAllowed)
+        {
+            document.querySelector(".options .selected").classList.remove("selected");
+            btn.classList.add("selected");
+            // passing selected btn background color as selectedColor value
+            selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
+            socket.emit('colorChanged',selectedColor);
+        }        
     });
 });
 
