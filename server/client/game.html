@@ -236,10 +236,7 @@ socket.on('connect', (socketInfo) => {
   socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
 
-    for (let i = 0; i < tableBody.rows.length; i++) {
-      tableBody.deleteRow(i);
-    }
-
+      tableBody.innerHTML = ""
       players.forEach(element => {
         console.log(element.userName+' adicionado à tabela')
         addPlayerRow(element.userName);
@@ -251,11 +248,13 @@ socket.on('connect', (socketInfo) => {
     
     const tableBody = document.getElementById('playersTable');
 
+    
+/*
     for (let i = 0; i < tableBody.rows.length; i++) {
       console.log(element.userName+' removido da tabela')
       tableBody.deleteRow(i);
       
-    }
+    }*/
 
     players.forEach(element => {
       console.log(element.userName+' removido da tabela')
