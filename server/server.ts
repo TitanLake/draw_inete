@@ -402,10 +402,8 @@ server.listen(port, function() {
 TO DO
 
 - desabilitar o cht de quem desenha
-- desabilitar chat quando acerta
-- end game depois que todos jogaram
+- reset game comando no chat
 - ao acertarem ele ganha os pontos da pessoa
-- comndo reset no chat caso preciso
 
 */
 
