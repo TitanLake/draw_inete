@@ -112,17 +112,17 @@ const btnSend = document.getElementById("sendMessage")
 const btnStart = document.getElementById("btnStart")
 const messageText = document.getElementById("messageBox")
 const tableBody = document.getElementById('playersTable')
-let gameStarted
+let gameStarted = false
 
-if(localStorage.getItem("gameStarted") === null)
-gameStarted = false
+
+if(localStorage.getItem("btnDisbled") == "true"){
+  btnStart.disabled = true;
+}
 
 
 socket.on('disconnect', () => {
   socket.emit('playerChanged');
 });
-
-
 
 
 btnSend.addEventListener("click",()=>{
@@ -168,10 +168,10 @@ socket.on('connect', (socketInfo) => {
   socket.on("game_started",(data)=>{
     console.log("game started")
    
-    
     if(socket.id !== data.socketId)
     {
       btnStart.disabled=true;
+      localStorage.setItem("btnDisbled","true")
     }
 
   })
@@ -179,7 +179,7 @@ socket.on('connect', (socketInfo) => {
   socket.on("ended_turn",()=>{
     console.log("game ended")
     
-
+    localStorage.getItem("btnDisbled","false")
     btnStart.disabled = false;
   })
 
