@@ -69,11 +69,12 @@ let words = [
   "Smartwatch",
   "Carregador portátil",
   "Projetor",
-  "Caixa de som bluetooth",
+  "Super Mario",
+  "Homem-Aranha",
+  "Coluna bluetooth",
   "Consola de videojogos",
   "Câmara",
-  "Fones de ouvido sem fio",
-  "Mouse gamer",
+  "Rato gamer",
   "Teclado mecânico",
   "Monitor",
   "Cadeira gamer",
@@ -81,31 +82,27 @@ let words = [
   "Scanner",
   "Roteador Wi-Fi",
   "Câmera fotográfica",
-  "Smart home",
+  "Casa",
+  "Portugal",
   "Caixa de ferramentas",
   "Bicicleta elétrica",
   "Mochila anti-furto",
   "Mala de viagem com rodinhas",
-  "Garrafa térmica",
-  "Guarda-chuva dobrável",
-  "Caneca térmica",
+  "Garrafa",
+  "Guarda-chuva",
+  "Caneca",
   "Óculos de realidade virtual",
   "Cadeado",
-  "Máquina de costura",
   "Piano",
   "Maquilhagem",
   "Relógio de pulso",
-  "Auriculares bluetooth",
+  "Fones bluetooth",
   "Lâmpada",
-  "Carregador wireless",
   "USB",
-  "Kit de ferramentas para celular",
   "Balança digital",
   "Powerbank",
   "Gilete",
-  "Purificador de ar",
   "Câmera",
-  "Colchão",
   "Câmera de monitoramento de bebês",
   "Barbeador elétrico",
   "Relógio inteligente",
@@ -122,7 +119,7 @@ let words = [
   "Ferro de passar roupas",
   "Torradeira",
   "Aspirador de pó robô",
-  "Churrasqueira elétrica",
+  "Churrasqueira",
   "Frigorífico",
   "Elefante",
   "Girafa",
@@ -306,7 +303,7 @@ io.on("connection",(socket:Socket)=>{
 
       messages.push({
         username: "JC BOT",
-        message: `${user_name} started the game. Only they can draw.`,
+        message: `${user_name} started the game. Guess the drawing!.`,
       });
       io.emit("messages_load", messages) // emit load messages to only user
     
@@ -405,10 +402,8 @@ server.listen(port, function() {
 TO DO
 
 - desabilitar o cht de quem desenha
-- desabilitar chat quando acerta
-- end game depois que todos jogaram
+- reset game comando no chat
 - ao acertarem ele ganha os pontos da pessoa
-- comndo reset no chat caso preciso
 
 */
 
