@@ -153,22 +153,34 @@ let words = [
 
 let users:IUser[] = []
 const messages: IMessage[] = [] 
-let generatedWord = ""
 let drawingPlayer = '';
+let generaTedWord = ""
+
+function clearTurn(){
+  drawingPlayer = ""
+
+    messages.push({
+      username: "JC BOT",
+      message: `ended turn`,
+    });
+
+    io.emit("messages_load", messages)
+
+    io.emit("clearCanvaServer")
+    io.emit("ended_turn")
+    io.emit("openChat")
+
+}
 
 io.on("connection",(socket:Socket)=>{
 
-  // adiciona um utilizador com pontuação 0
-    function addUser(username: string) {
-    users.push({ socketId:socket.id, userName:username,  score: 0 });
-    }
 
     // incrementa a pontuação do utilizador com o nome de utilizador especificado
   function addPoints(username: string, points: number) {
-  const user = users.find((u) => u.userName === username);
-  if (user) {
-    user.score += points;
-  }
+    const user = users.find((u) => u.userName === username);
+    if (user) {
+      user.score += points;
+    }
   }
 
 
@@ -181,35 +193,48 @@ io.on("connection",(socket:Socket)=>{
 
   socket.on("message_sent", async function(socketInfo: ISocketToUserWithMessage){
 
+  
+    if(drawingPlayer !== "" && generaTedWord) // game is running
+    {
+      if(generaTedWord.includes(socketInfo.message))
+      {
+        
+        const user = users.find((u) => u.userName === socketInfo.user_name);
+
+        if(user)
+        {
+
+          addPoints(user.userName, socketInfo.message.length)
+
+          messages.push({
+            username: "JC BOT",
+            message: `NICE ${user.userName}!🎉 - ${user.score} points`,
+          });
+
+          io.to(socket.id).emit("closeChat")
+
+          //bloquear o chat?
+        }
+      }
+      else
+      {
+          //mandar msg palavra incorreta
+          messages.push({
+              username: "JC BOT",
+              message: `WRONG 😢`,
+            });
+        }
+
+        return
+    }
+
     messages.push({
       message:socketInfo.message,
       username:socketInfo.user_name
     })
-    let word = socketInfo.message;
+
     io.emit("message_received")
 
-    if(socketInfo.message.includes(word))
-    {
-      
-      const user = users.find((u) => u.userName === socketInfo.user_name);
-      if(user)
-      {
-        user.score  += word.length;
-        messages.push({
-          username: "JC BOT",
-          message: `NICE${user.userName}!🎉 - ${user.score} points`,
-        });
-         //bloquear o chat?
-      }
-    }
-    else
-    {
-      //mandar msg palavra incorreta
-      messages.push({
-        username: "JC BOT",
-        message: `WRONG 😢`,
-      });
-    }
   })
 
   socket.on("fillColorCheckedChanged",()=>{
@@ -247,8 +272,6 @@ io.on("connection",(socket:Socket)=>{
     io.emit("mouseUpServer")
   
   })
-
-  
 
 
   socket.on("playerConnectedClient",(socketData:any)=>{
@@ -295,6 +318,8 @@ io.on("connection",(socket:Socket)=>{
       // select the string at the random index
       const randomWord = words[randomIndex];
 
+      generaTedWord = randomWord
+
       io.to(drawingPlayer).emit("drawing_allowed",{
         word:randomWord
       });
@@ -303,17 +328,7 @@ io.on("connection",(socket:Socket)=>{
 
   socket.on("end_turn",()=>{
 
-    drawingPlayer = ""
-
-    messages.push({
-      username: "JC BOT",
-      message: `ended turn`,
-    });
-
-    io.emit("messages_load", messages)
-
-    io.emit("clearCanvaServer")
-    io.emit("ended_turn")
+    clearTurn()
 
     io.to(socket.id).emit("user_ended_turn")
 
@@ -353,9 +368,7 @@ io.on("connection",(socket:Socket)=>{
 
     if(drawingPlayer === socket.id)
     {
-      drawingPlayer=""
-      io.emit("clearCanvaServer")
-      io.emit("ended_turn")
+      clearTurn()
     }
 
     users = users2
@@ -385,35 +398,11 @@ server.listen(port, function() {
 
 TO DO
 
-  fluxo do jogo
+- desabilitar o cht de quem desenha
+- desabilitar chat quando acerta
+- end game depois que todos jogaram
+- ao acertarem ele ganha os pontos da pessoa
+- comndo reset no chat caso preciso
 
-  eventos
-  - userJoinedClient
-    -userJoinedServer responde todos os users na sala
-
-  - startGame
-    - gameStarted avisa que o jogo comecou
-
-  escolher um user para receber a palavra
-    userChosen
-    e escerever no chat
-
-  - generatedWord = user recebe a palavra e desenha ( ele escolhe quando acaba )
-
-  - userNoChosen
-    
-    verificar o chat, quando alguem acertar emit evento acertou para o user que acertou 
-
-    escolher outro user
-
-
-  to do update maxi 11/03=>
-
-  user disconnection e reconnection
-    -implementar user disconnection e reconnection atraves do server(para remover bem os users da tabela)
-
-  adicionar error handlings
-
-  sistema de pontos e temas
 */
 
