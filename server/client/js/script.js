@@ -75,7 +75,7 @@ const drawTriangle = (drawData) => {
 socket.on("drawing_allowed", (word) => {
 
     console.log("allowed");
-    messageTextArea2.innerHTML += `<p style="color: darkgreen;">« Word - ${word.word} </p>`;
+    messageTextArea2.innerHTML += `<p style="color: darkgreen;">«JC BOT» - ${word.word} </p>`;
     isDrawingAllowed = true;
 });
 
