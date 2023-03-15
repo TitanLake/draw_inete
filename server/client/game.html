@@ -173,7 +173,7 @@ socket.on('connect', (socketInfo) => {
     if(socket.id !== data.socketId)
     {
       btnStart.disabled=true;
-      localStorage.setItem("btnDisbled","true")
+      localStorage.setItem("btnDisabled","true")
     }
 
   })
@@ -181,7 +181,7 @@ socket.on('connect', (socketInfo) => {
   socket.on("ended_turn",()=>{
     console.log("game ended")
     
-    localStorage.setItem("btnDisbled","false")
+    localStorage.setItem("btnDisabled","false")
     btnStart.disabled = false;
   })
 
@@ -202,7 +202,7 @@ socket.on('connect', (socketInfo) => {
         });
 
         gameStarted = true
-        localStorage.getItem("btnDisbled","false")
+        localStorage.getItem("btnDisabled","false")
       }
       else
       {

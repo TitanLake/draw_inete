@@ -194,7 +194,7 @@ io.on("connection",(socket:Socket)=>{
       const user = users.find((u) => u.userName === socketInfo.user_name);
       if(user)
       {
-        user.score  = word.length;
+        user.score  += word.length;
         messages.push({
           username: "JC BOT",
           message: `NICE${user.userName}!🎉 - ${user.score} points`,
