@@ -240,13 +240,21 @@ socket.on('connect', (socketInfo) => {
 
   localStorage.setItem('sockerId',socket.id);
 
+  socket.on("pointsAdded",(data)=>{
+    tableBody.innerHTML = ""
+    data.users.forEach(element => {
+      console.log(element.userName+' adicionado à tabela')
+      addPlayerRow(element.userName + " - " + element.score);
+    });
+  })
+
   socket.on('playerConnectedServer', (players) => {
     const tableBody = document.getElementById('playersTable');
 
       tableBody.innerHTML = ""
       players.forEach(element => {
         console.log(element.userName+' adicionado à tabela')
-        addPlayerRow(element.userName);
+        addPlayerRow(element.userName + " - " + element.score);
       });
 
   });
