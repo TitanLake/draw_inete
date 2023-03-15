@@ -248,12 +248,21 @@ canvas.addEventListener("mouseup", () => {
     }
 });
 
+canvas.addEventListener("touchstart", startDraw);
+canvas.addEventListener("touchmove", drawing);
+canvas.addEventListener("touchend", () => {
+    if(isDrawingAllowed)
+     {
+         socket.emit("mouseUpClient") 
+     }
+});
+
 // Desabilita o botão direito do mouse
-document.addEventListener("contextmenu", function(e){
+/*document.addEventListener("contextmenu", function(e){
     window.alert('Cant do that hehe')
     e.preventDefault();
 }, false);
-
+*/
 // Desabilita a tecla F12
 document.addEventListener("keydown", function(e) {
     if (e.keyCode == 123) {
