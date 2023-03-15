@@ -112,7 +112,7 @@ const btnSend = document.getElementById("sendMessage")
 const btnStart = document.getElementById("btnStart")
 const messageText = document.getElementById("messageBox")
 const tableBody = document.getElementById('playersTable')
-
+let gameStarted = false
 
 socket.on('disconnect', () => {
   socket.emit('playerChanged');
@@ -160,31 +160,53 @@ function removePlayerRow(playerName) {
 
 socket.on('connect', (socketInfo) => {
   
+  socket.on("game_started",(data)=>{
+    console.log("game started")
+   
+    
+    if(socket.id !== data.socketId)
+    {
+      btnStart.disabled=true;
+    }
+
+  })
+  
+  socket.on("ended_turn",()=>{
+    console.log("game ended")
+    
+
+    btnStart.disabled = false;
+  })
+
   btnStart.addEventListener("click", () =>
    {
 
-    if(btnStart.innerText == "Start Game")
-    {
-      btnStart.innerText = "End Turn"
-      btnStart.style.backgroundColor = "red"
+    if(!gameStarted){
 
-      socket.emit("start_game", {
-        socket_id,
-        user_name,
-      });
+      
+        btnStart.innerText = "End Turn"
+        btnStart.style.backgroundColor = "red"
 
-    }  
-    else
-    {
-      btnStart.innerText = "Start Game"
-      btnStart.style.backgroundColor = "green"
-      
-      socket.emit("end_turn", {
-        socket_id,
-        user_name,
-      });
-      
-    }
+        socket.emit("start_game", {
+          socket_id,
+          user_name,
+        });
+
+        gameStarted = true
+
+      }
+      else
+      {
+        btnStart.innerText = "Start Game"
+        btnStart.style.backgroundColor = "green"
+        gameStarted=false
+        socket.emit("end_turn", {
+          socket_id,
+          user_name,
+        });
+        
+      }
+    
 
     
   });

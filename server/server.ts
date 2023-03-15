@@ -276,14 +276,14 @@ io.on("connection",(socket:Socket)=>{
       drawingPlayer = socket.id;
 
       messages.push({
-        username: "GOD JC BOT",
+        username: "JC BOT",
         message: `${user_name} started the game. Only they can draw.`,
       });
       io.emit("messages_load", messages) // emit load messages to only user
     
-      io.emit("game_started", { 
+      socket.broadcast.emit("game_started", { 
         userName:user_name,
-        
+        socketId:socket.id
       });
 
       const randomIndex = Math.floor(Math.random() * words.length);
@@ -299,7 +299,16 @@ io.on("connection",(socket:Socket)=>{
 
   socket.on("end_turn",()=>{
 
-    io.emit("turn_ended")
+    drawingPlayer = ""
+
+    messages.push({
+      username: "JC BOT",
+      message: `ended turn`,
+    });
+
+    io.emit("messages_load", messages)
+
+    io.emit("ended_turn")
 
   })
 
