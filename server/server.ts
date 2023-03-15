@@ -311,6 +311,8 @@ io.on("connection",(socket:Socket)=>{
     io.emit("clearCanvaServer")
     io.emit("ended_turn")
 
+    io.to(socket.id).emit("user_ended_turn")
+
   })
 
 

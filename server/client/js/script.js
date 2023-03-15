@@ -82,6 +82,10 @@ socket.on("drawing_allowed", (word) => {
     isDrawingAllowed = true;
 });
 
+socket.on("user_ended_turn", ()=>{
+    isDrawingAllowed = false;
+})
+
 const startDraw = (e) => {
 
     console.log(isDrawingAllowed)
