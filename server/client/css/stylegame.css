@@ -157,6 +157,9 @@ section{
   width: 80%;
 }
 
+.block{
+  flex:1;
+}
 
 .block div{
   flex:1;
