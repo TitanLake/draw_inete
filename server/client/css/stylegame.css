@@ -19,14 +19,14 @@ body{
   gap: 10px;
   padding: 10px;
   height: 100%;
- 
+  
 }
 section{
   background: #fff;
   border-radius: 7px;
 }
 .tools-board{
-  width: 210px;
+  width: 30%;
   padding: 15px 22px 0;
 }
 .tools-board .row{
@@ -148,19 +148,65 @@ section{
   min-width: 500px;
 }
 
-
-
-
-main{
-  display: flex;
+.players{
+  display: block; margin: 0 auto;text-align: center;
 }
+
+
+.container{
+  width: 70%;
+}
+
+.players{
+  width: 10%;
+}
+
+.block div{
+  flex:1;
+  
+}
+
+
 
 @media screen and (max-width: 768px){
  
+  body{
+    width: 100%;
+    display: block;
+    padding: 40px 0;
+  }
+
+  .container{
+    width: 100%;
+    display: block;
+  }
+
+  .players table{
+    width: 100%;
+  }
+
+  .block{
+    width: 100%;
+    display: block;
+    padding: 0 2%;
+    
+  }
+
+  .block div{
+    min-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .block table{
+    width: 100%;
+    margin: 0 au;
+  }
+
   .container{
     height: 100%;
    display: block;
   }
+
   .tools-board{
     width: 100%;
     height: 100%;
@@ -171,7 +217,7 @@ main{
   .drawing-board{
     height: 100%;
     min-height: 500px;
-    min-width: 500px;
+    min-width: 300px;
     width: 100%;
   }
 
@@ -179,10 +225,10 @@ main{
     width: 100%;
     height: 100%;
     min-height: 500px;
-    min-width: 500px;
+    min-width: 300px;
   }
 
   main{
-    display: block;;
+    display: block;
   }
 }
