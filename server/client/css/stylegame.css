@@ -154,13 +154,12 @@ section{
 
 
 .container{
-  width: 70%;
+  width: 80%;
 }
 
-.players{
-  width: 10%;
+.players table{
+  width: 100%;
 }
-
 .block div{
   flex:1;
   
