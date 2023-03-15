@@ -158,8 +158,23 @@ let drawingPlayer = '';
 
 io.on("connection",(socket:Socket)=>{
 
-  const userScores: IUser[] = [];
+  // adiciona um usuário com pontuação 0
+    function addUser(username: string) {
+    users.push({ socketId:socket.id, userName:username,  score: 0 });
+    }
 
+    // incrementa a pontuação do usuário com o nome de usuário especificado
+  function addPoints(username: string, points: number) {
+  const user = users.find((u) => u.userName === username);
+  if (user) {
+    user.score += points;
+  }
+  }
+
+
+
+
+  
   socket.on("load_messages", async function(socketInfo: ISocketToUser){
     
     io.emit("messages_load", messages) // emit load messages to only user
@@ -172,15 +187,14 @@ io.on("connection",(socket:Socket)=>{
       message:socketInfo.message,
       username:socketInfo.user_name
     })
-   let word = socketInfo.message;
+    let word = socketInfo.message;
     io.emit("message_received")
-    
-
-
 
     if(socketInfo.message.includes(word))
     {
-       = word.length;
+      
+
+      = word.length;
 
 
       //bloquear o chat?
