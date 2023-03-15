@@ -26,10 +26,10 @@
     <div class="container">
       <section class="tools-board">
         <div class="row">
-          
+          <label id="word" class="title" style="font-size: 20px; display:none;" ></label>
           <label class="title" style="font-size: larger; color: chartreuse;">Draw INETE</label><br>
           <label class="title">Shapes</label>
-          <label id="word" class="title" style="font-size: 30px;" >Palavra</label>
+          
           <ul class="options">
             
             <li class="option tool" id="rectangle">
@@ -298,7 +298,7 @@ socket.on('connect', (socketInfo) => {
         messageTextArea.innerHTML += `<p>«<i style="color:red;">${element.username}</i>» - ${element.message} </p>`
       }
       else{
-        messageTextArea.innerHTML += `<p>«${element.username}» - ${element.message} </p>`
+        messageTextArea.innerHTML += `<p>«<i style="color:blue;">${element.username}</i>» - ${element.message} </p>`
       }
     
     });

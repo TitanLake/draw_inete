@@ -80,10 +80,14 @@ socket.on("drawing_allowed", (word) => {
     console.log("allowed");
     messageTextArea2.innerHTML += `<p style="color: darkgreen;">«JC BOT» - ${word.word} </p>`;
     isDrawingAllowed = true;
+
+    document.getElementById("word").style.display = "block"
+    document.getElementById("word").innerText = "Word: " + word.word
 });
 
 socket.on("user_ended_turn", ()=>{
     isDrawingAllowed = false;
+    document.getElementById("word").style.display = "none"
 })
 
 const startDraw = (e) => {
