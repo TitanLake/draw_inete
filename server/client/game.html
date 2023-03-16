@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="./css/bootstrap.min.css">
   </head>
 
-  <body style="" >
+  <body>
     <div class="players">
       <table class="table">
         <thead>
@@ -231,9 +231,6 @@ socket.on('connect', (socketInfo) => {
     
   });
 
-  socket.on("gameStarted",(user)=>{
-    
-  })
 
   socket.emit('playerConnectedClient',
     {

@@ -361,8 +361,9 @@ io.on("connection",(socket:Socket)=>{
 
 
   socket.on("start_game", ({ user_name }) => {
-
     // Only allow the first player who started the game to draw
+
+
     if (drawingPlayer === "") {
       console.log('game Started');
       drawingPlayer = socket.id;
