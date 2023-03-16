@@ -148,16 +148,16 @@ section{
   min-width: 500px;
 }
 
-.players{
+.players{ /* players list */
   display: block; margin: 0 auto;text-align: center;
   width: 10%;
 }
 
-.container{
+.container{ /* canva and tools board */
   width: 80%;
 }
 
-.block{
+.block{ /* chat */
   flex:1;
 }
 
