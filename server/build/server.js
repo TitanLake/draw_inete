@@ -346,12 +346,3 @@ app.get('/', function (req, res) {
 server.listen(port, function () {
     console.log(`Listening on port ${port}`);
 });
-/*
-
-TO DO
-
-- desabilitar o cht de quem desenha
-- reset game comando no chat
-- ao acertarem ele ganha os pontos da pessoa
-
-*/
